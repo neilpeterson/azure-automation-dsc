@@ -3,22 +3,13 @@
 	"contentVersion": "1.0.0.0",
 	"parameters": {
 		"adminUsername": {
-			"type": "string",
-			"metadata": {
-				"description": "Username for the Virtual Machine."
-			}
+			"type": "string"
 		},
 		"adminPassword": {
-			"type": "securestring",
-			"metadata": {
-				"description": "Password for the Virtual Machine."
-			}
+			"type": "securestring"
 		},
 		"vmCount": {
-			"type": "int",
-			"metadata": {
-				"description": "The number of Virtual Machines to create."
-			}
+			"type": "int"
 		},
 		"automationAccountName": {
 			"type": "string"

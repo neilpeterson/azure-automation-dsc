@@ -32,7 +32,7 @@
 			"properties": {
 				"mode": "Incremental",
 				"templateLink": {
-					"uri": "https://raw.githubusercontent.com/Azure-Samples/ignite-tour-lp4/master/LP4S3/arm-tamplates/automationAnalytics.json",
+					"uri": "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/master/automationAnalytics.json",
 					"contentVersion": "1.0.0.0"
 				},
 				"parameters": {
@@ -50,7 +50,7 @@
 			"properties": {
 				"mode": "Incremental",
 				"templateLink": {
-					"uri": "https://raw.githubusercontent.com/Azure-Samples/ignite-tour-lp4/master/LP4S3/arm-tamplates/virtualMachines.json",
+					"uri": "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/master/virtualMachines.json",
 					"contentVersion": "1.0.0.0"
 				},
 				"parameters": {
@@ -64,7 +64,19 @@
 						"value": "[parameters('vmCount')]"
 					},
 					"automationAccountName": {
-						"value": "[parameters('vmCount')]"
+						"value": "[reference('automationAnalytics').outputs.automationAccountName.value]"
+					},
+					"configurationName": {
+						"value": "[reference('automationAnalytics').outputs.configurationName.value]"
+					},
+					"registrationKey": {
+						"value": "[reference('automationAnalytics').outputs.registrationKey.value]"
+					},
+					"registrationUrl": {
+						"value": "[reference('automationAnalytics').outputs.registrationUrl.value]"
+					},
+					"nodeConfigurationName": {
+						"value": "[reference('automationAnalytics').outputs.nodeConfigurationName.value]"
 					}
 				}
 			}

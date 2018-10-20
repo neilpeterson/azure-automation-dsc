@@ -11,7 +11,7 @@
 		"insights-sku": "standard",
 		"configurationName": "windows-features",
 		"configurationDescription": "A configuration for installing IIS.",
-		"configurationURI": "https://raw.githubusercontent.com/Azure-Samples/ignite-tour-lp4/master/LP4S3/dsc-configurations/windows-config.ps1",
+		"configurationURI": "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/master/dsc-configurations/windows-config.ps1",
 		"nodeConfigurationName": "features.localhost"
 	},
 	"resources": [{
@@ -79,10 +79,25 @@
 		}
 	],
 	"outputs": {
-		"automationAccountName": "[parameters('automationAccountName')]",
-		"configurationName": "[variables('configurationName')]",
-		"registrationKey": "[listKeys(resourceId('Microsoft.Automation/automationAccounts/', parameters('automationAccountName')), '2018-01-15').Keys[0].value]",
-		"registrationUrl" : "[reference(concat('Microsoft.Automation/automationAccounts/', parameters('automationAccountName'))).registrationUrl]",
-		"nodeConfigurationName": "[variables('nodeConfigurationName')]"
+		"automationAccountName":{
+			"type": "string",
+			"value": "[parameters('automationAccountName')]"
+		},
+		"configurationName":{
+			"type": "string",
+			"value": "[variables('configurationName')]"
+		},
+		"registrationKey":{
+			"type": "string",
+			"value": "[listKeys(resourceId('Microsoft.Automation/automationAccounts/', parameters('automationAccountName')), '2018-01-15').Keys[0].value]"
+		},
+		"registrationUrl":{
+			"type": "string",
+			"value": "[reference(concat('Microsoft.Automation/automationAccounts/', parameters('automationAccountName'))).registrationUrl]"
+		},
+		"nodeConfigurationName":{
+			"type": "string",
+			"value": "[variables('nodeConfigurationName')]"
+		}
 	}
 }
