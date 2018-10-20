@@ -1,0 +1,73 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"automationAccountName": {
+			"type": "string"
+		},
+		"adminUsername": {
+			"type": "string",
+			"metadata": {
+				"description": "Username for the Virtual Machine."
+			}
+		},
+		"adminPassword": {
+			"type": "securestring",
+			"metadata": {
+				"description": "Password for the Virtual Machine."
+			}
+		},
+		"vmCount": {
+			"type": "int",
+			"metadata": {
+				"description": "The number of Virtual Machines to create."
+			}
+		}
+	},
+	"resources": [
+		{
+			"apiVersion": "2015-01-01",
+			"name": "automationAnalytics",
+			"type": "Microsoft.Resources/deployments",
+			"properties": {
+				"mode": "Incremental",
+				"templateLink": {
+					"uri": "https://raw.githubusercontent.com/Azure-Samples/ignite-tour-lp4/master/LP4S3/arm-tamplates/automationAnalytics.json",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"automationAccountName": {
+						"value": "[parameters('automationAccountName')]"
+					}
+				}
+			}
+		},
+		{
+			"apiVersion": "2015-01-01",
+			"name": "virtualMachine",
+			"type": "Microsoft.Resources/deployments",
+			"dependsOn": ["Microsoft.Resources/deployments/automationAnalytics"],
+			"properties": {
+				"mode": "Incremental",
+				"templateLink": {
+					"uri": "https://raw.githubusercontent.com/Azure-Samples/ignite-tour-lp4/master/LP4S3/arm-tamplates/virtualMachines.json",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"adminUsername": {
+						"value": "[parameters('adminUsername')]"
+					},
+					"adminPassword": {
+						"value": "[parameters('adminPassword')]"
+					},
+					"vmCount": {
+						"value": "[parameters('vmCount')]"
+					},
+					"automationAccountName": {
+						"value": "[parameters('vmCount')]"
+					}
+				}
+			}
+		}
+	]
+}

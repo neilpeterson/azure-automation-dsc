@@ -1,0 +1,88 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"automationAccountName": {
+			"type": "string"
+		}
+	},
+	"variables": {
+		"location": "westeurope",
+		"insights-sku": "standard",
+		"configurationName": "windows-features",
+		"configurationDescription": "A configuration for installing IIS.",
+		"configurationURI": "https://raw.githubusercontent.com/Azure-Samples/ignite-tour-lp4/master/LP4S3/dsc-configurations/windows-config.ps1",
+		"nodeConfigurationName": "features.localhost"
+	},
+	"resources": [{
+			"name": "[parameters('automationAccountName')]",
+			"type": "Microsoft.Automation/automationAccounts",
+			"apiVersion": "2015-10-31",
+			"location": "[variables('location')]",
+			"comments": "Automation account for OMS",
+			"properties": {
+				"sku": {
+					"name": "Basic"
+				}
+			},
+			"resources": [{
+					"name": "[variables('configurationName')]",
+					"type": "configurations",
+					"apiVersion": "2015-10-31",
+					"location": "[variables('location')]",
+					"tags": {},
+					"dependsOn": [
+						"[concat('Microsoft.Automation/automationAccounts/', parameters('automationAccountName'))]"
+					],
+					"properties": {
+						"logVerbose": true,
+						"description": "[variables('configurationDescription')]",
+						"state": "Published",
+						"overwrite": "true",
+						"source": {
+							"type": "uri",
+							"value": "[variables('configurationURI')]"
+						}
+					}
+				},
+				{
+					"name": "[variables('configurationName')]",
+					"type": "compilationjobs",
+					"apiVersion": "2018-01-15",
+					"location": "variables('location')]",
+					"tags": {},
+					"dependsOn": [
+						"[concat('Microsoft.Automation/automationAccounts/', parameters('automationAccountName'))]",
+						"[concat('Microsoft.Automation/automationAccounts/', parameters('automationAccountName'), '/configurations/', variables('configurationName'))]"
+					],
+					"properties": {
+						"configuration": {
+							"name": "[variables('configurationName')]"
+						}
+					}
+				}
+			]
+		},
+		{
+			"type": "Microsoft.OperationalInsights/workspaces",
+			"name": "[parameters('automationAccountName')]",
+			"apiVersion": "2015-11-01-preview",
+			"location": "[variables('location')]",
+			"properties": {
+				"sku": {
+					"name": "[variables('insights-sku')]"
+				},
+				"features": {
+					"searchVersion": 1
+				}
+			}
+		}
+	],
+	"outputs": {
+		"automationAccountName": "[parameters('automationAccountName')]",
+		"configurationName": "[variables('configurationName')]",
+		"registrationKey": "[listKeys(resourceId('Microsoft.Automation/automationAccounts/', parameters('automationAccountName')), '2018-01-15').Keys[0].value]",
+		"registrationUrl" : "[reference(concat('Microsoft.Automation/automationAccounts/', parameters('automationAccountName'))).registrationUrl]",
+		"nodeConfigurationName": "[variables('nodeConfigurationName')]"
+	}
+}
