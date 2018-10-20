@@ -11,12 +11,6 @@
 		"vmCount": {
 			"type": "int"
 		},
-		"automationAccountName": {
-			"type": "string"
-		},
-		"configurationName": {
-			"type": "string"
-		},
 		"registrationKey": {
 			"type": "string"
 		},
