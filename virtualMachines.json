@@ -114,7 +114,7 @@
 					"vmSize": "Standard_A2"
 				},
 				"osProfile": {
-					"computerName": "[variables('vmName')]",
+					"computerName": "[concat(variables('vmName'), copyIndex())]",
 					"adminUsername": "[parameters('adminUsername')]",
 					"adminPassword": "[parameters('adminPassword')]"
 				},
@@ -142,13 +142,11 @@
 		},
 		{
             "type": "Microsoft.Compute/virtualMachines/extensions",
-            "name": "[concat(variables('vmName'),'/Microsoft.Powershell.DSC')]",
+            "name": "[concat(variables('vmName'), copyIndex(), '/Microsoft.Powershell.DSC')]",
             "apiVersion": "2015-06-15",
             "location": "[variables('location')]",
              "dependsOn": [
-                "[concat('Microsoft.Automation/automationAccounts/', parameters('automationAccountName'))]",
-                "[concat('Microsoft.Automation/automationAccounts/', parameters('automationAccountName'), '/configurations/', parameters('configurationName'))]",
-                "[concat('Microsoft.Compute/virtualMachines/', variables('vmName'))]"
+                "[concat('Microsoft.Compute/virtualMachines/', variables('vmName'), copyIndex())]"
             ],
             "properties": {
                 "publisher": "Microsoft.Powershell",
@@ -214,7 +212,11 @@
                         }
                     ]
                 }
-            }
+			},
+			"copy": {
+				"name": "dsccopy",
+				"count": "[parameters('vmCount')]"
+			}
         }
 	],
 	"outputs": {}
