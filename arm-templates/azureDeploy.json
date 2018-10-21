@@ -54,12 +54,6 @@
 					"vmCount": {
 						"value": "[parameters('vmCount')]"
 					},
-					"automationAccountName": {
-						"value": "[reference('automationAnalytics').outputs.automationAccountName.value]"
-					},
-					"configurationName": {
-						"value": "[reference('automationAnalytics').outputs.configurationName.value]"
-					},
 					"registrationKey": {
 						"value": "[reference('automationAnalytics').outputs.registrationKey.value]"
 					},
