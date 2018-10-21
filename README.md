@@ -15,7 +15,13 @@ Running `azureDeploy.json` results in the following:
 
 Run the following Azure CLI command to deploy the solution.
 
+```
+az group create --name AzureAutomationDSC --location westeurope
+az group deployment create --resource-group AzureAutomationDSC --template-file azureDeploy.json --parameters @azuredeploy.parameters.json
+```
+
 ## TODO:
 
+- Add resource group to template.
 - Add Azure Automation Runbook to break x number of VM so they return non-compliant.
 - Automate configuration of Software Updates, Inventory, and Change Tracking). Does not appear to be exposed.via Azure Resource provider, how to automate this?
