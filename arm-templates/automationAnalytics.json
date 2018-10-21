@@ -2,6 +2,9 @@
 	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json",
 	"contentVersion": "1.0.0.0",
 	"parameters": {
+		"automationAccountName": {
+			"type": "string"
+		}
 	},
 	"variables": {
 		"location": "westeurope",
@@ -10,7 +13,7 @@
 		"configurationDescription": "A configuration for installing IIS.",
 		"configurationURI": "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/master/dsc-configurations/windows-config.ps1",
 		"nodeConfigurationName": "features.localhost",
-		"automationAccountName": "[uniqueString(subscription().subscriptionId)]"
+		"automationAccountName": "parameters('automationAccountName'),'-','[uniqueString(resourceGroup().id)])]"
 	},
 	"resources": [{
 			"name": "[variables('automationAccountName')]",
