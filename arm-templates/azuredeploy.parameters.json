@@ -10,9 +10,6 @@
        },
        "VMCount": {
            "value": 4
-       },
-       "automationAccountName": {
-           "value": "automation"
        }
     }
   }
