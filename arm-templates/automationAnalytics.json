@@ -10,7 +10,7 @@
 		"configurationDescription": "A configuration for installing IIS.",
 		"configurationURI": "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/master/dsc-configurations/windows-config.ps1",
 		"nodeConfigurationName": "features.localhost",
-		"automationAccountName": "[guid(subscription().subscriptionId)]"
+		"automationAccountName": "[uniqueString(subscription().subscriptionId)]"
 	},
 	"resources": [{
 			"name": "[variables('automationAccountName')]",
