@@ -10,6 +10,9 @@
 		},
 		"VMCount": {
 			"type": "int"
+		},
+		"automationAccountName": {
+			"type": "string"
 		}
 	},
 	"variables": {
@@ -28,6 +31,9 @@
 					"contentVersion": "1.0.0.0"
 				},
 				"parameters": {
+					"adminUsername": {
+						"value": "[parameters('automationAccountName')]"
+					}
 				}
 			}
 		},
