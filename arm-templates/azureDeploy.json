@@ -2,9 +2,6 @@
 	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
 	"contentVersion": "1.0.0.0",
 	"parameters": {
-		"automationAccountName": {
-			"type": "string"
-		},
 		"adminUsername": {
 			"type": "string"
 		},
@@ -15,6 +12,10 @@
 			"type": "int"
 		}
 	},
+	"variables": {
+		"automationAnalyticsURI": "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/master/arm-templates/automationAnalytics.json",
+		"virtualMachineURI": "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/master/arm-templates/virtualMachines.json"
+	},
 	"resources": [
 		{
 			"apiVersion": "2015-01-01",
@@ -23,13 +24,10 @@
 			"properties": {
 				"mode": "Incremental",
 				"templateLink": {
-					"uri": "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/master/automationAnalytics.json",
+					"uri": "[variables('automationAnalyticsURI')]",
 					"contentVersion": "1.0.0.0"
 				},
 				"parameters": {
-					"automationAccountName": {
-						"value": "[parameters('automationAccountName')]"
-					}
 				}
 			}
 		},
@@ -41,7 +39,7 @@
 			"properties": {
 				"mode": "Incremental",
 				"templateLink": {
-					"uri": "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/master/virtualMachines.json",
+					"uri": "[variables('virtualMachineURI')]",
 					"contentVersion": "1.0.0.0"
 				},
 				"parameters": {

@@ -2,9 +2,6 @@
 	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json",
 	"contentVersion": "1.0.0.0",
 	"parameters": {
-		"automationAccountName": {
-			"type": "string"
-		}
 	},
 	"variables": {
 		"location": "westeurope",
@@ -12,10 +9,11 @@
 		"configurationName": "windows-features",
 		"configurationDescription": "A configuration for installing IIS.",
 		"configurationURI": "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/master/dsc-configurations/windows-config.ps1",
-		"nodeConfigurationName": "features.localhost"
+		"nodeConfigurationName": "features.localhost",
+		"automationAccountName": "[guid(subscription().subscriptionId)]"
 	},
 	"resources": [{
-			"name": "[parameters('automationAccountName')]",
+			"name": "[variables('automationAccountName')]",
 			"type": "Microsoft.Automation/automationAccounts",
 			"apiVersion": "2015-10-31",
 			"location": "[variables('location')]",
@@ -32,7 +30,7 @@
 					"location": "[variables('location')]",
 					"tags": {},
 					"dependsOn": [
-						"[concat('Microsoft.Automation/automationAccounts/', parameters('automationAccountName'))]"
+						"[concat('Microsoft.Automation/automationAccounts/', variables('automationAccountName'))]"
 					],
 					"properties": {
 						"logVerbose": true,
@@ -52,8 +50,8 @@
 					"location": "variables('location')]",
 					"tags": {},
 					"dependsOn": [
-						"[concat('Microsoft.Automation/automationAccounts/', parameters('automationAccountName'))]",
-						"[concat('Microsoft.Automation/automationAccounts/', parameters('automationAccountName'), '/configurations/', variables('configurationName'))]"
+						"[concat('Microsoft.Automation/automationAccounts/', variables('automationAccountName'))]",
+						"[concat('Microsoft.Automation/automationAccounts/', variables('automationAccountName'), '/configurations/', variables('configurationName'))]"
 					],
 					"properties": {
 						"configuration": {
@@ -65,7 +63,7 @@
 		},
 		{
 			"type": "Microsoft.OperationalInsights/workspaces",
-			"name": "[parameters('automationAccountName')]",
+			"name": "[variables('automationAccountName')]",
 			"apiVersion": "2015-11-01-preview",
 			"location": "[variables('location')]",
 			"properties": {
@@ -81,7 +79,7 @@
 	"outputs": {
 		"automationAccountName":{
 			"type": "string",
-			"value": "[parameters('automationAccountName')]"
+			"value": "[variables('automationAccountName')]"
 		},
 		"configurationName":{
 			"type": "string",
@@ -89,11 +87,11 @@
 		},
 		"registrationKey":{
 			"type": "string",
-			"value": "[listKeys(resourceId('Microsoft.Automation/automationAccounts/', parameters('automationAccountName')), '2018-01-15').Keys[0].value]"
+			"value": "[listKeys(resourceId('Microsoft.Automation/automationAccounts/', variables('automationAccountName')), '2018-01-15').Keys[0].value]"
 		},
 		"registrationUrl":{
 			"type": "string",
-			"value": "[reference(concat('Microsoft.Automation/automationAccounts/', parameters('automationAccountName'))).registrationUrl]"
+			"value": "[reference(concat('Microsoft.Automation/automationAccounts/', variables('automationAccountName'))).registrationUrl]"
 		},
 		"nodeConfigurationName":{
 			"type": "string",
