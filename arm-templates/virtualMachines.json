@@ -22,13 +22,13 @@
 		}
 	},
 	"variables": {
-		"nicName": "myVMNic",
+		"nicName": "virtual-nic-",
 		"addressPrefix": "10.0.0.0/16",
-		"subnetName": "Subnet",
+		"subnetName": "subnet",
 		"subnetPrefix": "10.0.0.0/24",
-		"publicIPAddressName": "myPublicIP",
-		"vmName": "SimpleWinVM",
-		"virtualNetworkName": "MyVNET",
+		"publicIPAddressName": "public-ip-",
+		"vmName": "win-vm-",
+		"virtualNetworkName": "virtial-network",
 		"windowsOSVersion": "2016-Datacenter",
 		"location": "[resourceGroup().location]",
 		"subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('subnetName'))]",
