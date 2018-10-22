@@ -1,0 +1,157 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"adminUsername": {
+			"type": "string"
+		},
+		"adminPassword": {
+			"type": "securestring"
+		},
+		"VMCount": {
+			"type": "int"
+		}
+	},
+	"variables": {
+		"automationAnalyticsURI": "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/add-aa-packs/linked-templates/automationAnalytics.json",
+		"virtualMachineURI": "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/add-aa-packs/linked-templates/virtualMachines.json",
+		"solutionsURI": "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/add-aa-packs/linked-templates/solution.json",
+		"linkAccountsURI": "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/add-aa-packs/linked-templates/linkedworkspaceaccount.json",
+		"location": "westeurope"
+
+	},
+	"resources": [{
+			"apiVersion": "2015-01-01",
+			"name": "automationAnalytics",
+			"type": "Microsoft.Resources/deployments",
+			"properties": {
+				"mode": "Incremental",
+				"templateLink": {
+					"uri": "[variables('automationAnalyticsURI')]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"location": {
+						"value": "[variables('location')]"
+					}
+				}
+			}
+		},
+		{
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2017-05-10",
+			"name": "UpdatesSolution",
+			"dependsOn": [
+				"[concat('Microsoft.Resources/deployments/', 'automationAnalytics')]"
+			],
+			"properties": {
+				"mode": "Incremental",
+				"templateLink": {
+					"uri": "[variables('solutionsURI')]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"location": {
+						"value": "[variables('location')]"
+					},
+					"workspaceName": {
+						"value": "[reference('automationAnalytics').outputs.automationAccountName.value]"
+					},
+					"solutionName": {
+						"value": "Updates"
+					}
+				}
+			}
+		},
+		{
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2017-05-10",
+			"name": "ChangeTrackingSolution",
+			"dependsOn": [
+				"[concat('Microsoft.Resources/deployments/', 'automationAnalytics')]"
+			],
+			"properties": {
+				"mode": "Incremental",
+				"templateLink": {
+					"uri": "[variables('solutionsURI')]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"location": {
+						"value": "[variables('location')]"
+					},
+					"workspaceName": {
+						"value": "[reference('automationAnalytics').outputs.automationAccountName.value]"
+					},
+					"solutionName": {
+						"value": "ChangeTracking"
+					}
+				}
+			}
+		},
+		{
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2017-05-10",
+			"name": "LinkAccountWithWorkspace",
+			"dependsOn": [
+				"[concat('Microsoft.Resources/deployments/', 'automationAnalytics')]",
+				"[concat('Microsoft.Resources/deployments/', 'ChangeTrackingSolution')]",
+				"[concat('Microsoft.Resources/deployments/', 'UpdatesSolution')]"
+			],
+			"properties": {
+				"mode": "Incremental",
+				"templateLink": {
+					"uri": "[variables('linkAccountsURI')]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"accountName": {
+						"value": "[reference('automationAnalytics').outputs.automationAccountName.value]"
+					},
+					"accountResourceGroupName": {
+						"value": "[resourceGroup().name]"
+					},
+					"workspaceName": {
+						"value": "[reference('automationAnalytics').outputs.automationAccountName.value]"
+					},
+					"workspaceRegion": {
+						"value": "[variables('location')]"
+					}
+				}
+			}
+		},
+		{
+			"apiVersion": "2015-01-01",
+			"name": "virtualMachine",
+			"type": "Microsoft.Resources/deployments",
+			"dependsOn": ["Microsoft.Resources/deployments/automationAnalytics"],
+			"properties": {
+				"mode": "Incremental",
+				"templateLink": {
+					"uri": "[variables('virtualMachineURI')]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"adminUsername": {
+						"value": "[parameters('adminUsername')]"
+					},
+					"adminPassword": {
+						"value": "[parameters('adminPassword')]"
+					},
+					"vmCount": {
+						"value": "[parameters('vmCount')]"
+					},
+					"registrationKey": {
+						"value": "[reference('automationAnalytics').outputs.registrationKey.value]"
+					},
+					"registrationUrl": {
+						"value": "[reference('automationAnalytics').outputs.registrationUrl.value]"
+					},
+					"nodeConfigurationName": {
+						"value": "[reference('automationAnalytics').outputs.nodeConfigurationName.value]"
+					}
+				}
+			}
+		}
+	]
+}

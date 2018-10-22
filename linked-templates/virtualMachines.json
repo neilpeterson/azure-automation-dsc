@@ -33,7 +33,7 @@
 		"location": "[resourceGroup().location]",
 		"subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('subnetName'))]",
 		"dscExtensionModulesUrl": "https://github.com/Azure/azure-quickstart-templates/raw/master/dsc-extension-azure-automation-pullserver/UpdateLCMforAAPull.zip",
-        "dscExtensionConfigurationFunction": "UpdateLCMforAAPull.ps1\\ConfigureLCMforAAPull"
+		"dscExtensionConfigurationFunction": "UpdateLCMforAAPull.ps1\\ConfigureLCMforAAPull"
 	},
 	"resources": [{
 			"apiVersion": "2016-03-30",
@@ -135,83 +135,87 @@
 			}
 		},
 		{
-            "type": "Microsoft.Compute/virtualMachines/extensions",
-            "name": "[concat(variables('vmName'), copyIndex(), '/Microsoft.Powershell.DSC')]",
-            "apiVersion": "2015-06-15",
-            "location": "[variables('location')]",
-             "dependsOn": [
-                "[concat('Microsoft.Compute/virtualMachines/', variables('vmName'), copyIndex())]"
-            ],
-            "properties": {
-                "publisher": "Microsoft.Powershell",
-                "type": "DSC",
-                "typeHandlerVersion": "2.76",
-                "protectedSettings": {
-                    "Items": {
-                        "registrationKeyPrivate": "[parameters('registrationKey')]"
-                    }
-                },
-                "settings": {
-                    "ModulesUrl": "[variables('dscExtensionModulesUrl')]",
-                    "SasToken": "",
-                    "ConfigurationFunction": "[variables('dscExtensionConfigurationFunction')]",
-                    "Properties": [
-                        {
-                            "Name": "RegistrationKey",
-                            "Value": {
-                                "UserName": "PLACEHOLDER_DONOTUSE",
-                                "Password": "PrivateSettingsRef:registrationKeyPrivate"
-                            },
-                            "TypeName": "System.Management.Automation.PSCredential"
-                        },
-                        {
-                            "Name": "RegistrationUrl",
-                            "Value": "[parameters('registrationUrl')]",
-                            "TypeName": "System.String"
-                        },
-                        {
-                            "Name": "NodeConfigurationName",
-                            "Value": "[parameters('nodeConfigurationName')]",
-                            "TypeName": "System.String"
-                        },
-                        {
-                            "Name": "ConfigurationMode",
-                            "Value": "ApplyAndMonitor",
-                            "TypeName": "System.String"
-                        },
-                        {
-                            "Name": "ConfigurationModeFrequencyMins",
-                            "Value": 15,
-                            "TypeName": "System.Int32"
-                        },
-                        {
-                            "Name": "RefreshFrequencyMins",
-                            "Value": 30,
-                            "TypeName": "System.Int32"
-                        },
-                        {
-                            "Name": "RebootNodeIfNeeded",
-                            "Value": true,
-                            "TypeName": "System.Boolean"
-                        },
-                        {
-                            "Name": "ActionAfterReboot",
-                            "Value": "ContinueConfiguration",
-                            "TypeName": "System.String"
-                        },
-                        {
-                            "Name": "AllowModuleOverwrite",
-                            "Value": false,
-                            "TypeName": "System.Boolean"
-                        }
-                    ]
-                }
+			"type": "Microsoft.Compute/virtualMachines/extensions",
+			"name": "[concat(variables('vmName'), copyIndex(), '/Microsoft.Powershell.DSC')]",
+			"apiVersion": "2015-06-15",
+			"location": "[variables('location')]",
+			"dependsOn": [
+				"[concat('Microsoft.Compute/virtualMachines/', variables('vmName'), copyIndex())]"
+			],
+			"properties": {
+				"publisher": "Microsoft.Powershell",
+				"type": "DSC",
+				"typeHandlerVersion": "2.76",
+				"protectedSettings": {
+					"Items": {
+						"registrationKeyPrivate": "[parameters('registrationKey')]"
+					}
+				},
+				"settings": {
+					"ModulesUrl": "[variables('dscExtensionModulesUrl')]",
+					"SasToken": "",
+					"ConfigurationFunction": "[variables('dscExtensionConfigurationFunction')]",
+					"Properties": [{
+							"Name": "RegistrationKey",
+							"Value": {
+								"UserName": "PLACEHOLDER_DONOTUSE",
+								"Password": "PrivateSettingsRef:registrationKeyPrivate"
+							},
+							"TypeName": "System.Management.Automation.PSCredential"
+						},
+						{
+							"Name": "RegistrationUrl",
+							"Value": "[parameters('registrationUrl')]",
+							"TypeName": "System.String"
+						},
+						{
+							"Name": "NodeConfigurationName",
+							"Value": "[parameters('nodeConfigurationName')]",
+							"TypeName": "System.String"
+						},
+						{
+							"Name": "ConfigurationMode",
+							"Value": "ApplyAndMonitor",
+							"TypeName": "System.String"
+						},
+						{
+							"Name": "ConfigurationModeFrequencyMins",
+							"Value": 15,
+							"TypeName": "System.Int32"
+						},
+						{
+							"Name": "RefreshFrequencyMins",
+							"Value": 30,
+							"TypeName": "System.Int32"
+						},
+						{
+							"Name": "RebootNodeIfNeeded",
+							"Value": true,
+							"TypeName": "System.Boolean"
+						},
+						{
+							"Name": "ActionAfterReboot",
+							"Value": "ContinueConfiguration",
+							"TypeName": "System.String"
+						},
+						{
+							"Name": "AllowModuleOverwrite",
+							"Value": false,
+							"TypeName": "System.Boolean"
+						}
+					]
+				}
 			},
 			"copy": {
 				"name": "dsccopy",
 				"count": "[parameters('vmCount')]"
 			}
-        }
+		}
 	],
-	"outputs": {}
+	"outputs": {
+		"vmNamePrefix":{
+			"type": "string",
+			"value": "[variables('vmName')]"
+		}
+	}
 }
