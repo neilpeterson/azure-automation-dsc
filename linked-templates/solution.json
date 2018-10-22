@@ -1,12 +1,6 @@
 {
     "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
-    "outputs": {
-      "WorkspaceId": {
-        "type": "string",
-        "value": "[reference(resourceId(resourceGroup().name, 'Microsoft.OperationalInsights/workspaces/', parameters('workspaceName')), '2015-11-01-preview').customerId]"
-      }
-    },
     "parameters": {
       "location": {
         "type": "string",

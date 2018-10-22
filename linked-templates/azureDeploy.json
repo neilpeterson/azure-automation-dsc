@@ -90,9 +90,6 @@
 					"workspaceName": {
 						"value": "[reference('automationAnalytics').outputs.automationAccountName.value]"
 					},
-					"workspaceRegion": {
-						"value": "[variables('accountWorkspaceRegion')]"
-					},
 					"solutionName": {
 						"value": "Updates"
 					}
