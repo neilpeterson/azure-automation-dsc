@@ -24,4 +24,4 @@ az group deployment create --resource-group AzureAutomationDSC --template-file a
 
 - Add resource group to template.
 - Add Azure Automation Runbook to break x number of VM so they return non-compliant.
-- Automate configuration of Software Updates, Inventory, and Change Tracking. Does not appear to be exposed .via Azure Resource provider, how to automate this?
+- Automate configuration of Software Updates, Inventory, and Change Tracking.
