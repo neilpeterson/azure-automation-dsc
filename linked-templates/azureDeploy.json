@@ -16,7 +16,6 @@
 		"automationAnalyticsURI": "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/add-aa-packs/linked-templates/automationAnalytics.json",
 		"virtualMachineURI": "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/add-aa-packs/linked-templates/virtualMachines.json",
 		"solutionsURI": "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/add-aa-packs/linked-templates/solution.json",
-		"linkURI": "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/add-aa-packs/linked-templates/linkedworkspaceaccount.json",
 		"location": "westeurope"
 
 	},
