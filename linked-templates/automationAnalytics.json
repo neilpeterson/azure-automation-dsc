@@ -2,9 +2,14 @@
 	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json",
 	"contentVersion": "1.0.0.0",
 	"parameters": {
+		"location": {
+			"type": "string",
+			"metadata": {
+			  "description": "The region of the Log Analytics workspace."
+			}
+		}
 	},
 	"variables": {
-		"location": "westeurope",
 		"insights-sku": "standard",
 		"configurationName": "windows-features",
 		"configurationDescription": "A configuration for installing IIS.",
@@ -16,7 +21,7 @@
 			"name": "[variables('automationAccountName')]",
 			"type": "Microsoft.Automation/automationAccounts",
 			"apiVersion": "2015-10-31",
-			"location": "[variables('location')]",
+			"location": "[parameters('location')]",
 			"comments": "Automation account for OMS",
 			"properties": {
 				"sku": {
@@ -27,7 +32,7 @@
 					"name": "[variables('configurationName')]",
 					"type": "configurations",
 					"apiVersion": "2015-10-31",
-					"location": "[variables('location')]",
+					"location": "[parameters('location')]",
 					"tags": {},
 					"dependsOn": [
 						"[concat('Microsoft.Automation/automationAccounts/', variables('automationAccountName'))]"
@@ -47,7 +52,7 @@
 					"name": "[variables('configurationName')]",
 					"type": "compilationjobs",
 					"apiVersion": "2018-01-15",
-					"location": "variables('location')]",
+					"location": "parameters('location')]",
 					"tags": {},
 					"dependsOn": [
 						"[concat('Microsoft.Automation/automationAccounts/', variables('automationAccountName'))]",
@@ -65,7 +70,7 @@
 			"type": "Microsoft.OperationalInsights/workspaces",
 			"name": "[variables('automationAccountName')]",
 			"apiVersion": "2015-11-01-preview",
-			"location": "[variables('location')]",
+			"location": "[parameters('location')]",
 			"properties": {
 				"sku": {
 					"name": "[variables('insights-sku')]"

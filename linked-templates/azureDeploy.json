@@ -14,10 +14,11 @@
 	},
 	"variables": {
 		"automationAnalyticsURI": "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/master/arm-templates/automationAnalytics.json",
-		"virtualMachineURI": "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/master/arm-templates/virtualMachines.json"
+		"virtualMachineURI": "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/master/arm-templates/virtualMachines.json",
+		"accountWorkspaceRegion": "westeurope"
+
 	},
-	"resources": [
-		{
+	"resources": [{
 			"apiVersion": "2015-01-01",
 			"name": "automationAnalytics",
 			"type": "Microsoft.Resources/deployments",
@@ -28,6 +29,9 @@
 					"contentVersion": "1.0.0.0"
 				},
 				"parameters": {
+					"location": {
+						"value": "[variables('accountWorkspaceRegion')]"
+					}
 				}
 			}
 		},
@@ -60,6 +64,35 @@
 					},
 					"nodeConfigurationName": {
 						"value": "[reference('automationAnalytics').outputs.nodeConfigurationName.value]"
+					}
+				}
+			}
+		},
+		{
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2017-05-10",
+			"name": "UpdatesSolution",
+			"dependsOn": [
+				"[concat('Microsoft.Resources/deployments/', 'automationAnalytics')]"
+			],
+			"properties": {
+				"mode": "Incremental",
+				"templateLink": {
+					"uri": "https://raw.githubusercontent.com/azureautomation/automation-packs/master/managed-vm/linked-templates/solution.json",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"location": {
+						"value": "[variables('accountWorkspaceRegion')]"
+					},
+					"workspaceName": {
+						"value": "[reference('automationAnalytics').outputs.automationAccountName.value]"
+					},
+					"workspaceRegion": {
+						"value": "[variables('accountWorkspaceRegion')]"
+					},
+					"solutionName": {
+						"value": "Updates"
 					}
 				}
 			}
