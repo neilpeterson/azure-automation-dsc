@@ -216,7 +216,7 @@
 		},
 		{
 			"type": "Microsoft.Resources/deployments",
-			"apiVersion": "2017-05-10",
+			"apiVersion": "2018-05-01",
 			"name": "ScheduleUpdateDeployment",
 			"dependsOn": [
 				"[concat('Microsoft.Compute/virtualMachines/', variables('vmName'), copyIndex())]"
@@ -224,7 +224,7 @@
 			"properties": {
 				"mode": "Incremental",
 				"templateLink": {
-					"uri": "https://raw.githubusercontent.com/azureautomation/automation-packs/master/managed-vm/linked-templates/scheduleUpdateDeployment.json",
+					"uri": "hhttps://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/add-aa-packs/linked-templates/scheduleUpdateDeployment.json",
 					"contentVersion": "1.0.0.0"
 				},
 				"parameters": {
