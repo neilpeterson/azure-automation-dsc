@@ -13,8 +13,10 @@
 		}
 	},
 	"variables": {
-		"automationAnalyticsURI": "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/master/arm-templates/automationAnalytics.json",
-		"virtualMachineURI": "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/master/arm-templates/virtualMachines.json",
+		"automationAnalyticsURI": "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/add-aa-packs/linked-templates/automationAnalytics.json",
+		"virtualMachineURI": "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/add-aa-packs/linked-templates/virtualMachines.json",
+		"solutionsURI": "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/add-aa-packs/linked-templates/solution.json",
+		"linkURI": "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/add-aa-packs/linked-templates/linkedworkspaceaccount.json",
 		"accountWorkspaceRegion": "westeurope"
 
 	},
@@ -78,7 +80,7 @@
 			"properties": {
 				"mode": "Incremental",
 				"templateLink": {
-					"uri": "https://raw.githubusercontent.com/azureautomation/automation-packs/master/managed-vm/linked-templates/solution.json",
+					"uri": "[variables('solutionsURI')]",
 					"contentVersion": "1.0.0.0"
 				},
 				"parameters": {
