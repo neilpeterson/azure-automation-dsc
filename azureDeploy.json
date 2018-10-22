@@ -38,42 +38,6 @@
 			}
 		},
 		{
-			"apiVersion": "2015-01-01",
-			"name": "virtualMachine",
-			"type": "Microsoft.Resources/deployments",
-			"dependsOn": ["Microsoft.Resources/deployments/automationAnalytics"],
-			"properties": {
-				"mode": "Incremental",
-				"templateLink": {
-					"uri": "[variables('virtualMachineURI')]",
-					"contentVersion": "1.0.0.0"
-				},
-				"parameters": {
-					"adminUsername": {
-						"value": "[parameters('adminUsername')]"
-					},
-					"adminPassword": {
-						"value": "[parameters('adminPassword')]"
-					},
-					"vmCount": {
-						"value": "[parameters('vmCount')]"
-					},
-					"registrationKey": {
-						"value": "[reference('automationAnalytics').outputs.registrationKey.value]"
-					},
-					"registrationUrl": {
-						"value": "[reference('automationAnalytics').outputs.registrationUrl.value]"
-					},
-					"nodeConfigurationName": {
-						"value": "[reference('automationAnalytics').outputs.nodeConfigurationName.value]"
-					},
-					"accountName": {
-						"value": "[reference('automationAnalytics').outputs.automationAccountName.value]"
-					}
-				}
-			}
-		},
-		{
 			"type": "Microsoft.Resources/deployments",
 			"apiVersion": "2017-05-10",
 			"name": "UpdatesSolution",
@@ -102,10 +66,69 @@
 		{
 			"type": "Microsoft.Resources/deployments",
 			"apiVersion": "2017-05-10",
-			"name": "LinkAccountWithWorkspace",
+			"name": "ChangeTrackingSolution",
 			"dependsOn": [
-				"[concat('Microsoft.Resources/deployments/', 'automationAnalytics')]",
-				"[concat('Microsoft.Resources/deployments/', 'UpdatesSolution')]"
+				"[concat('Microsoft.Resources/deployments/', 'automationAnalytics')]"
+			],
+			"properties": {
+				"mode": "Incremental",
+				"templateLink": {
+					"uri": "[variables('solutionsURI')]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"location": {
+						"value": "[variables('location')]"
+					},
+					"workspaceName": {
+						"value": "[reference('automationAnalytics').outputs.automationAccountName.value]"
+					},
+					"solutionName": {
+						"value": "ChangeTracking"
+					}
+				}
+			}
+		},
+		{
+			"apiVersion": "2015-01-01",
+			"name": "virtualMachine",
+			"type": "Microsoft.Resources/deployments",
+			"dependsOn": ["Microsoft.Resources/deployments/automationAnalytics"],
+			"properties": {
+				"mode": "Incremental",
+				"templateLink": {
+					"uri": "[variables('virtualMachineURI')]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"adminUsername": {
+						"value": "[parameters('adminUsername')]"
+					},
+					"adminPassword": {
+						"value": "[parameters('adminPassword')]"
+					},
+					"vmCount": {
+						"value": "[parameters('vmCount')]"
+					},
+					"registrationKey": {
+						"value": "[reference('automationAnalytics').outputs.registrationKey.value]"
+					},
+					"registrationUrl": {
+						"value": "[reference('automationAnalytics').outputs.registrationUrl.value]"
+					},
+					"nodeConfigurationName": {
+						"value": "[reference('automationAnalytics').outputs.nodeConfigurationName.value]"
+					}
+				}
+			}
+		},
+		{
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2017-05-10",
+			"name": "ScheduleUpdateDeployment",
+			"dependsOn": [
+				"Microsoft.Resources/deployments/automationAnalytics",
+				"Microsoft.Resources/deployments/virtualMachine"
 			],
 			"properties": {
 				"mode": "Incremental",
@@ -117,16 +140,20 @@
 					"accountName": {
 						"value": "[reference('automationAnalytics').outputs.automationAccountName.value]"
 					},
-					"accountResourceGroupName": {
-						"value": "[resourceGroup().name]"
-					},
-					"workspaceName": {
-						"value": "[reference('automationAnalytics').outputs.automationAccountName.value]"
-					},
-					"workspaceRegion": {
+					"accountRegion": {
 						"value": "[variables('location')]"
+					},
+					"VMResourceId": {
+						"value": "concat('[resourceId('Microsoft.Compute/virtualMachines', 'win-vm-', copyIndex(),')]')"
+					},
+					"softwareDeploymentName": {
+						"value": "EverySunday"
 					}
 				}
+			},
+			"copy": {
+				"name": "softwareUpdateCopy",
+				"count": "[parameters('vmCount')]"
 			}
 		}
 	]

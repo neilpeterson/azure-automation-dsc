@@ -19,9 +19,6 @@
 		},
 		"nodeConfigurationName": {
 			"type": "string"
-		},
-		"accountName": {
-			"type": "string"
 		}
 	},
 	"variables": {
@@ -213,40 +210,12 @@
 				"name": "dsccopy",
 				"count": "[parameters('vmCount')]"
 			}
-		},
-		{
-			"type": "Microsoft.Resources/deployments",
-			"apiVersion": "2017-05-10",
-			"name": "ScheduleUpdateDeployment",
-			"dependsOn": [
-				"[concat('Microsoft.Compute/virtualMachines/', variables('vmName'), copyIndex())]"
-			],
-			"properties": {
-				"mode": "Incremental",
-				"templateLink": {
-					"uri": "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/add-aa-packs/linked-templates/scheduleUpdateDeployment.json",
-					"contentVersion": "1.0.0.0"
-				},
-				"parameters": {
-					"accountName": {
-						"value": "[parameters('accountName')]"
-					},
-					"accountRegion": {
-						"value": "[variables('location')]"
-					},
-					"VMResourceId": {
-						"value": "[resourceId(resourceGroup().name, 'Microsoft.Compute/virtualMachines/', variables('vmName'), copyIndex())]"
-					},
-					"softwareDeploymentName": {
-						"value": "EverySunday"
-					}
-				}
-			},
-			"copy": {
-				"name": "softwareUpdateCopy",
-				"count": "[parameters('vmCount')]"
-			}
 		}
 	],
-	"outputs": {}
+	"outputs": {
+		"vmNamePrefix":{
+			"type": "string",
+			"value": "[variables('vmName')]"
+		}
+	}
 }
