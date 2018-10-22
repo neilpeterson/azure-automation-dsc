@@ -8,7 +8,9 @@ A series of linked templates are stored in the `./arm-templates` directory.
     <img src="http://azuredeploy.net/deploybutton.png"/>
 </a>
 
+
 Or run the following Azure CLI commands.
+
 ```
 az group create --name AzureAutomationDSC --location westeurope
 az group deployment create --resource-group AzureAutomationDSC --template-file azureDeploy.json --parameters @azuredeploy.parameters.json
