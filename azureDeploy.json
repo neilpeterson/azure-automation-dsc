@@ -101,7 +101,7 @@
 			"apiVersion": "2017-05-10",
 			"name": "LinkAccountWithWorkspace",
 			"dependsOn": [
-				"[concat('Microsoft.Resources/deployments/', 'AzureAutomationHybridWorkerSolution')]",
+				"[concat('Microsoft.Resources/deployments/', 'automationAnalytics')]",
 				"[concat('Microsoft.Resources/deployments/', 'UpdatesSolution')]"
 			],
 			"properties": {
