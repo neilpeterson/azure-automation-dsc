@@ -13,10 +13,10 @@
 		}
 	},
 	"variables": {
-		"automationAnalyticsURI": "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/add-aa-packs/linked-templates/automationAnalytics.json",
-		"virtualMachineURI": "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/add-aa-packs/linked-templates/virtualMachines.json",
-		"solutionsURI": "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/add-aa-packs/linked-templates/solution.json",
-		"linkAccountsURI": "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/add-aa-packs/linked-templates/linkedworkspaceaccount.json",
+		"automationAnalyticsURI": "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/master/linked-templates/automationAnalytics.json",
+		"virtualMachineURI": "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/master/linked-templates/virtualMachines.json",
+		"solutionsURI": "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/master/linked-templates/solution.json",
+		"linkAccountsURI": "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/master/linked-templates/linkedworkspaceaccount.json",
 		"location": "westeurope"
 
 	},
