@@ -16,6 +16,7 @@
 		"automationAnalyticsURI": "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/add-aa-packs/linked-templates/automationAnalytics.json",
 		"virtualMachineURI": "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/add-aa-packs/linked-templates/virtualMachines.json",
 		"solutionsURI": "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/add-aa-packs/linked-templates/solution.json",
+		"linkAccountsURI": "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/add-aa-packs/linked-templates/linkedworkspaceaccount.json",
 		"location": "westeurope"
 
 	},
@@ -91,6 +92,36 @@
 					},
 					"solutionName": {
 						"value": "Updates"
+					}
+				}
+			}
+		},
+		{
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2017-05-10",
+			"name": "LinkAccountWithWorkspace",
+			"dependsOn": [
+				"[concat('Microsoft.Resources/deployments/', 'AzureAutomationHybridWorkerSolution')]",
+				"[concat('Microsoft.Resources/deployments/', 'UpdatesSolution')]"
+			],
+			"properties": {
+				"mode": "Incremental",
+				"templateLink": {
+					"uri": "[variables('linkAccountsURI')]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"accountName": {
+						"value": "[reference('automationAnalytics').outputs.automationAccountName.value]"
+					},
+					"accountResourceGroupName": {
+						"value": "[resourceGroup().name]"
+					},
+					"workspaceName": {
+						"value": "[reference('automationAnalytics').outputs.automationAccountName.value]"
+					},
+					"workspaceRegion": {
+						"value": "[variables('location')]"
 					}
 				}
 			}
