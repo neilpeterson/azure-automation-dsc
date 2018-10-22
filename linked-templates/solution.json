@@ -25,21 +25,6 @@
     },
     "resources": [
       {
-        "apiVersion": "2017-03-15-preview",
-        "name": "[parameters('workspaceName')]",
-        "type": "Microsoft.OperationalInsights/workspaces",
-        "comments": "Azure Log Analytics workspace",
-        "properties": {
-          "sku": {
-            "name": "Standalone"
-          },
-          "features": {
-            "legacy": 0,
-            "searchVersion": 1
-          }
-        }
-      },
-      {
         "apiVersion": "2015-11-01-preview",
         "type": "Microsoft.OperationsManagement/solutions",
         "location": "[parameters('location')]",

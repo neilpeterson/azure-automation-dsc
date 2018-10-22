@@ -17,7 +17,7 @@
 		"virtualMachineURI": "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/add-aa-packs/linked-templates/virtualMachines.json",
 		"solutionsURI": "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/add-aa-packs/linked-templates/solution.json",
 		"linkURI": "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/add-aa-packs/linked-templates/linkedworkspaceaccount.json",
-		"accountWorkspaceRegion": "westeurope"
+		"location": "westeurope"
 
 	},
 	"resources": [{
@@ -32,7 +32,7 @@
 				},
 				"parameters": {
 					"location": {
-						"value": "[variables('accountWorkspaceRegion')]"
+						"value": "[variables('location')]"
 					}
 				}
 			}
@@ -85,7 +85,7 @@
 				},
 				"parameters": {
 					"location": {
-						"value": "[variables('accountWorkspaceRegion')]"
+						"value": "[variables('location')]"
 					},
 					"workspaceName": {
 						"value": "[reference('automationAnalytics').outputs.automationAccountName.value]"
