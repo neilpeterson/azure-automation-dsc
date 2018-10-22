@@ -24,6 +24,7 @@ Running `azureDeploy.json` results in the following:
 - Azure Automation DSC Pull Server is deployed.
 - [DSC configuration](https://github.com/Azure-Samples/ignite-tour-lp4/blob/master/LP4S3/dsc-configurations/windows-config.ps1) uploaded and compiled.
 - Log Analytics account deployed.
+- Inventory and Change Tracking sollutions are deployed and linked to automation account.
 - X VMs created and onboarded into DSC.
 - VMs configured with the DSC and report as compliant
 - Deploys Software Update solution and links to Azure Automation account.
@@ -32,5 +33,4 @@ Running `azureDeploy.json` results in the following:
 
 - Add resource group to template.
 - Add Azure Automation Runbook to break x number of VM so they return non-compliant.
-- Automate configuration of Inventory, and Change Tracking.
 - Update VM deployments so that VMs are onboarded to Software Updates, Inventory, and Change Tracking.

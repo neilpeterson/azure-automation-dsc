@@ -90,6 +90,37 @@
 			}
 		},
 		{
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2017-05-10",
+			"name": "LinkAccountWithWorkspace",
+			"dependsOn": [
+				"[concat('Microsoft.Resources/deployments/', 'automationAnalytics')]",
+				"[concat('Microsoft.Resources/deployments/', 'ChangeTrackingSolution')]",
+				"[concat('Microsoft.Resources/deployments/', 'UpdatesSolution')]"
+			],
+			"properties": {
+				"mode": "Incremental",
+				"templateLink": {
+					"uri": "[variables('linkAccountsURI')]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"accountName": {
+						"value": "[reference('automationAnalytics').outputs.automationAccountName.value]"
+					},
+					"accountResourceGroupName": {
+						"value": "[resourceGroup().name]"
+					},
+					"workspaceName": {
+						"value": "[reference('automationAnalytics').outputs.automationAccountName.value]"
+					},
+					"workspaceRegion": {
+						"value": "[variables('location')]"
+					}
+				}
+			}
+		},
+		{
 			"apiVersion": "2015-01-01",
 			"name": "virtualMachine",
 			"type": "Microsoft.Resources/deployments",
@@ -120,40 +151,6 @@
 						"value": "[reference('automationAnalytics').outputs.nodeConfigurationName.value]"
 					}
 				}
-			}
-		},
-		{
-			"type": "Microsoft.Resources/deployments",
-			"apiVersion": "2017-05-10",
-			"name": "ScheduleUpdateDeployment",
-			"dependsOn": [
-				"Microsoft.Resources/deployments/automationAnalytics",
-				"Microsoft.Resources/deployments/virtualMachine"
-			],
-			"properties": {
-				"mode": "Incremental",
-				"templateLink": {
-					"uri": "[variables('linkAccountsURI')]",
-					"contentVersion": "1.0.0.0"
-				},
-				"parameters": {
-					"accountName": {
-						"value": "[reference('automationAnalytics').outputs.automationAccountName.value]"
-					},
-					"accountRegion": {
-						"value": "[variables('location')]"
-					},
-					"VMResourceId": {
-						"value": "concat('[resourceId('Microsoft.Compute/virtualMachines', 'win-vm-', copyIndex(),')]')"
-					},
-					"softwareDeploymentName": {
-						"value": "EverySunday"
-					}
-				}
-			},
-			"copy": {
-				"name": "softwareUpdateCopy",
-				"count": "[parameters('vmCount')]"
 			}
 		}
 	]
