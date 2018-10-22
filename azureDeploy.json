@@ -66,6 +66,9 @@
 					},
 					"nodeConfigurationName": {
 						"value": "[reference('automationAnalytics').outputs.nodeConfigurationName.value]"
+					},
+					"accountName": {
+						"value": "[reference('automationAnalytics').outputs.automationAccountName.value]"
 					}
 				}
 			}
