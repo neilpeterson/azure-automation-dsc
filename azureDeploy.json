@@ -1,10 +1,7 @@
 {
-	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"$schema": "https://schema.management.azure.com/schemas/2018-05-01/deploymentTemplate.json#",
 	"contentVersion": "1.0.0.0",
 	"parameters": {
-		"rgName": {
-			"type": "string"
-		},
 		"adminUsername": {
 			"type": "string"
 		},
@@ -27,17 +24,9 @@
 	},
 	"resources": [
 		{
-			"type": "Microsoft.Resources/resourceGroups",
 			"apiVersion": "2018-05-01",
-			"location": "[variables('location')]",
-			"name": "[parameters('rgName')]",
-			"properties": {}
-		},
-		{
-			"apiVersion": "2015-01-01",
 			"name": "automationAnalytics",
 			"type": "Microsoft.Resources/deployments",
-			"resourceGroup": "[parameters('rgName')]",
 			"properties": {
 				"mode": "Incremental",
 				"templateLink": {
@@ -53,9 +42,8 @@
 		},
 		{
 			"type": "Microsoft.Resources/deployments",
-			"apiVersion": "2017-05-10",
+			"apiVersion": "2018-05-01",
 			"name": "UpdatesSolution",
-			"resourceGroup": "[parameters('rgName')]",
 			"dependsOn": [
 				"[concat('Microsoft.Resources/deployments/', 'automationAnalytics')]"
 			],
@@ -80,9 +68,8 @@
 		},
 		{
 			"type": "Microsoft.Resources/deployments",
-			"apiVersion": "2017-05-10",
+			"apiVersion": "2018-05-01",
 			"name": "ChangeTrackingSolution",
-			"resourceGroup": "[parameters('rgName')]",
 			"dependsOn": [
 				"[concat('Microsoft.Resources/deployments/', 'automationAnalytics')]"
 			],
@@ -107,9 +94,8 @@
 		},
 		{
 			"type": "Microsoft.Resources/deployments",
-			"apiVersion": "2017-05-10",
+			"apiVersion": "2018-05-01",
 			"name": "LinkAccountWithWorkspace",
-			"resourceGroup": "[parameters('rgName')]",
 			"dependsOn": [
 				"[concat('Microsoft.Resources/deployments/', 'automationAnalytics')]",
 				"[concat('Microsoft.Resources/deployments/', 'ChangeTrackingSolution')]",
@@ -138,10 +124,9 @@
 			}
 		},
 		{
-			"apiVersion": "2015-01-01",
+			"apiVersion": "2018-05-01",
 			"name": "virtualMachine",
 			"type": "Microsoft.Resources/deployments",
-			"resourceGroup": "[parameters('rgName')]",
 			"dependsOn": ["Microsoft.Resources/deployments/automationAnalytics"],
 			"properties": {
 				"mode": "Incremental",
@@ -176,11 +161,9 @@
 		},
 		{
 			"type": "Microsoft.Resources/deployments",
-			"apiVersion": "2017-05-10",
+			"apiVersion": "2018-05-01",
 			"name": "AzureMonitorActionGroup",
-			"resourceGroup": "[parameters('rgName')]",
-			"dependsOn": [
-			],
+			"dependsOn": [],
 			"properties": {
 				"mode": "Incremental",
 				"templateLink": {
@@ -196,11 +179,10 @@
 		},
 		{
 			"type": "Microsoft.Resources/deployments",
-			"apiVersion": "2017-05-10",
+			"apiVersion": "2018-05-01",
 			"name": "AzureMonitorAlert",
-			"resourceGroup": "[parameters('rgName')]",
 			"dependsOn": [
-				"[concat('Microsoft.Resources/deployments/', 'AzureMonitorActionGroup')]",
+				"[concat('Microsoft.Resources/deployments/', 'AzureMonitorActionGroup')]"
 			],
 			"properties": {
 				"mode": "Incremental",
@@ -210,7 +192,7 @@
 				},
 				"parameters": {
 					"targetResourceGroup": {
-						"value": "[resourceId('Microsoft.Resources/resourceGroups/', parameters('rgName'))]"
+						"value": "[resourceGroup().id]"
 					}
 				}
 			}
