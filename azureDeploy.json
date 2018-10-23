@@ -20,10 +20,8 @@
 		"azureMonitorAlert": "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/master/linked-templates/azureMonitorAlert.json",
 		"azureMonitorActionGroupURI": "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/master/linked-templates/azureMonitorActionGroup.json",
 		"location": "westeurope"
-
 	},
-	"resources": [
-		{
+	"resources": [{
 			"apiVersion": "2018-05-01",
 			"name": "automationAnalytics",
 			"type": "Microsoft.Resources/deployments",
@@ -192,7 +190,7 @@
 				},
 				"parameters": {
 					"targetResourceGroup": {
-						"value": "[resourceGroup().id]"
+						"value": "[concat('[','[resourceGroup().id]',']')]"
 					}
 				}
 			}
