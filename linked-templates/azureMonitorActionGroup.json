@@ -12,7 +12,7 @@
     "variables": {
         "actionGroupName": "testActionGroup",
         "actionGroupShortName": "tag"
-    }
+    },
     "resources": [
       {
         "type": "Microsoft.Insights/actionGroups",
