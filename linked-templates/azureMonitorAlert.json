@@ -3,7 +3,7 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "targetResourceGroup":{
-            "type": "array",
+            "type": "string",
             "minLength": 1,
             "metadata": {
                 "description": "Full path of the resource group(s) where target resources to be monitored are in. For example - /subscriptions/00000000-0000-0000-0000-0000-00000000/resourceGroups/ResourceGroupName"
@@ -36,9 +36,7 @@
                 "description": "[variables('alertDescription')]",
                 "severity": "[variables('alertSeverity')]",
                 "enabled": "[variables('isEnabled')]",
-                "scopes": [
-                    "parameters('targetResourceGroup')"
-                ],
+                "scopes": [ "[parameters('targetResourceGroup')]"],
                 "targetResourceType": "[variables('targetResourceType')]",
                 "targetResourceRegion": "[variables('targetResourceRegion')]",
                 "evaluationFrequency":"[variables('evaluationFrequency')]",
