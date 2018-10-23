@@ -36,7 +36,9 @@
                 "description": "[variables('alertDescription')]",
                 "severity": "[variables('alertSeverity')]",
                 "enabled": "[variables('isEnabled')]",
-                "scopes": "[parameters('targetResourceGroup')]",
+                "scopes": [
+                    "parameters('targetResourceGroup')"
+                ],
                 "targetResourceType": "[variables('targetResourceType')]",
                 "targetResourceRegion": "[variables('targetResourceRegion')]",
                 "evaluationFrequency":"[variables('evaluationFrequency')]",

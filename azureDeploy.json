@@ -10,6 +10,9 @@
 		},
 		"VMCount": {
 			"type": "int"
+		},
+		"email": {
+			"type": "string"
 		}
 	},
 	"variables": {
@@ -169,8 +172,8 @@
 					"contentVersion": "1.0.0.0"
 				},
 				"parameters": {
-					"targetResourceGroup": {
-						"value": "Updates"
+					"email": {
+						"value": "[parameters('email')]"
 					}
 				}
 			}
@@ -190,7 +193,7 @@
 				},
 				"parameters": {
 					"targetResourceGroup": {
-						"value": "[concat('[','[resourceGroup().id]',']')]"
+						"value": "resourceGroup().id"
 					}
 				}
 			}
