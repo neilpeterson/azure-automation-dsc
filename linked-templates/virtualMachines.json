@@ -210,7 +210,30 @@
 				"name": "dsccopy",
 				"count": "[parameters('vmCount')]"
 			}
-		}
+		},
+		{
+            "type": "Microsoft.Compute/virtualMachines/extensions",
+            "apiVersion": "2017-03-30",
+			"name": "[concat(variables('vmName'), copyIndex(), '/Microsoft.Monitoring')]",
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "publisher": "Microsoft.EnterpriseCloud.Monitoring",
+                "type": "MicrosoftMonitoringAgent",
+                "typeHandlerVersion": "1.0",
+                "autoUpgradeMinorVersion": true,
+                "settings": {
+                    "workspaceId": "[reference(resourceId(resourceGroup().name, 'Microsoft.OperationalInsights/workspaces/', parameters('nodeConfigurationName')), '2015-11-01-preview').customerId]",
+					"azureResourceId": "[resourceId('Microsoft.Compute/virtualMachines/', concat(variables('vmName'), copyIndex()))]"
+                },
+                "protectedSettings": {
+                    "workspaceKey": "[listKeys(resourceId(resourceGroup().name, 'Microsoft.OperationalInsights/workspaces/', parameters('nodeConfigurationName')), '2015-11-01-preview').primarySharedKey]"
+                }
+			},
+			"copy": {
+				"name": "dsccopy",
+				"count": "[parameters('vmCount')]"
+			}
+        }
 	],
 	"outputs": {
 		"vmNamePrefix":{
