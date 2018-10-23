@@ -1,0 +1,65 @@
+{
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "targetResourceGroup":{
+            "type": "array",
+            "minLength": 1,
+            "metadata": {
+                "description": "Full path of the resource group(s) where target resources to be monitored are in. For example - /subscriptions/00000000-0000-0000-0000-0000-00000000/resourceGroups/ResourceGroupName"
+            }
+        }
+    },
+    "variables": {
+        "alertName": "template-test",
+        "alertDescription": "Genereated .via template.",
+        "alertSeverity": 3,
+        "isEnabled": true,
+        "targetResourceType": "Microsoft.Compute/virtualMachines",
+        "targetResourceRegion": "westeurope",
+        "metricName": "Percentage CPU",
+        "operator": "GreaterThan",
+        "threshold": "30",
+        "timeAggregation": "Average",
+        "windowSize": "PT5M",
+        "evaluationFrequency": "PT1M",
+        "actionGroupId": "/subscriptions/3762d87c-ddb8-425f-b2fc-29e5e859edaf/resourceGroups/Default-ActivityLogAlerts/providers/microsoft.insights/actionGroups/testactiongroup"
+    },
+    "resources": [
+        {
+            "name": "[variables('alertName')]",
+            "type": "Microsoft.Insights/metricAlerts",
+            "location": "global",
+            "apiVersion": "2018-03-01",
+            "tags": {},
+            "properties": {
+                "description": "[variables('alertDescription')]",
+                "severity": "[variables('alertSeverity')]",
+                "enabled": "[variables('isEnabled')]",
+                "scopes": "[parameters('targetResourceGroup')]",
+                "targetResourceType": "[variables('targetResourceType')]",
+                "targetResourceRegion": "[variables('targetResourceRegion')]",
+                "evaluationFrequency":"[variables('evaluationFrequency')]",
+                "windowSize": "[variables('windowSize')]",
+                "criteria": {
+                    "odata.type": "Microsoft.Azure.Monitor.MultipleResourceMultipleMetricCriteria",
+                    "allOf": [
+                        {
+                            "name" : "1st criterion",
+                            "metricName": "[variables('metricName')]",
+                            "dimensions":[],
+                            "operator": "[variables('operator')]",
+                            "threshold" : "[variables('threshold')]",
+                            "timeAggregation": "[variables('timeAggregation')]"
+                        }
+                    ]
+                },
+                "actions": [
+                    {
+                        "actionGroupId": "[variables('actionGroupId')]"
+                    }
+                ]
+            }
+        }
+    ]
+}

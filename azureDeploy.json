@@ -17,6 +17,8 @@
 		"virtualMachineURI": "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/master/linked-templates/virtualMachines.json",
 		"solutionsURI": "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/master/linked-templates/solution.json",
 		"linkAccountsURI": "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/master/linked-templates/linkedworkspaceaccount.json",
+		"azureMonitorAlert": "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/master/linked-templates/azureMonitorAlert.json",
+		"azureMonitorActionGroupURI": "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/master/linked-templates/azureMonitorActionGroup.json"
 		"location": "westeurope"
 
 	},
@@ -152,6 +154,45 @@
 					},
 					"logAnalyticsName": {
 						"value": "[reference('automationAnalytics').outputs.automationAccountName.value]"
+					}
+				}
+			}
+		},
+		{
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2017-05-10",
+			"name": "AzureMonitorActionGroup",
+			"dependsOn": [
+			],
+			"properties": {
+				"mode": "Incremental",
+				"templateLink": {
+					"uri": "[variables('azureMonitorActionGroupURI')]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"targetResourceGroup": {
+						"value": "Updates"
+					}
+				}
+			}
+		},
+		{
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2017-05-10",
+			"name": "AzureMonitorAlert",
+			"dependsOn": [
+				"[concat('Microsoft.Resources/deployments/', 'AzureMonitorActionGroup')]",
+			],
+			"properties": {
+				"mode": "Incremental",
+				"templateLink": {
+					"uri": "[variables('azureMonitorAlert')]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"targetResourceGroup": {
+						"value": "Updates"
 					}
 				}
 			}
