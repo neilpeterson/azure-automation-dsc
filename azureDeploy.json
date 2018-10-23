@@ -149,6 +149,9 @@
 					},
 					"nodeConfigurationName": {
 						"value": "[reference('automationAnalytics').outputs.nodeConfigurationName.value]"
+					},
+					"logAnalyticsName": {
+						"value": "[reference('automationAnalytics').outputs.automationAccountName.value]"
 					}
 				}
 			}
