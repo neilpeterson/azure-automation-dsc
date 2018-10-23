@@ -29,6 +29,8 @@ Running `azureDeploy.json` results in the following:
 - X VMs created and onboarded into DSC
 - VMs configured with the DSC configuration and report as compliant
 - VMs are onboarded to inventory, change tracking, software update solutions
+- Azure Monitor Action Group is created
+- Azurre Monitor alert is created and applied to all VMs in RG
 
 ## TODO:
 

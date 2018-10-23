@@ -183,7 +183,7 @@
 			"apiVersion": "2018-05-01",
 			"name": "AzureMonitorAlert",
 			"dependsOn": [
-				"[concat('Microsoft.Resources/deployments/', 'AzureMonitorActionGroup')]"
+				"[concat('Microsoft.Resources/deployments/', 'virtualMachine')]"
 			],
 			"properties": {
 				"mode": "Incremental",
@@ -193,7 +193,7 @@
 				},
 				"parameters": {
 					"targetResourceGroup": {
-						"value": "resourceGroup().id"
+						"value": "[resourceGroup().id]"
 					}
 				}
 			}
