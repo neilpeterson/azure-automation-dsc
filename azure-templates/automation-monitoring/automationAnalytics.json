@@ -72,6 +72,9 @@
 					"type": "Microsoft.Automation/automationAccounts/runbooks",
 					"name": "[variables('name')]",
 					"location": "[variables('location')]",
+					"dependsOn": [
+						"[concat('Microsoft.Automation/automationAccounts/', variables('automationAccountName'))]"
+					],
 					"properties": {
 						"runbookType": "PowerShell",
 						"publishContentLink": {
