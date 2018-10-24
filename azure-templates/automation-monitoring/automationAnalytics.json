@@ -89,6 +89,9 @@
 					"name": "TeamsURI",
 					"type": "variables",
 					"apiVersion": "2015-10-31",
+					"dependsOn": [
+						"[concat('Microsoft.Automation/automationAccounts/', variables('automationAccountName'))]"
+					],
 					"properties": {
 					  "value": "[variables('teamsURI')]",
 					  "description": "string"
