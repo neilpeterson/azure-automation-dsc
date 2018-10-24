@@ -34,7 +34,10 @@ Running `azureDeploy.json` results in the following:
 
 ## TODO:
 
-- Add resource group to template
+- Add functionality to post alert to teams
+- Dashboard Resource ID is not working
 - Add Azure Automation Runbook to break x number of VM so they return non-compliant
+- Add VM configuation to install CPU spike tool
+- Add Runbook to invoke spike tool
 - Add Software update deployment
 - Add some VM inventory automation
