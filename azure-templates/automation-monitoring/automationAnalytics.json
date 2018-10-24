@@ -31,7 +31,8 @@
 					"name": "Basic"
 				}
 			},
-			"resources": [{
+			"resources": [
+				{
 					"name": "[variables('configurationName')]",
 					"type": "configurations",
 					"apiVersion": "2015-10-31",
