@@ -197,7 +197,7 @@
 					},
 					"actionGroupId": {
 						"value": "[reference('AzureMonitorActionGroup').outputs.actionGroupId.value]"
-					},
+					}
 				}
 			}
 		}
