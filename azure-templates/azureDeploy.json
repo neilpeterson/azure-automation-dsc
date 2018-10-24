@@ -2,12 +2,6 @@
 	"$schema": "https://schema.management.azure.com/schemas/2018-05-01/deploymentTemplate.json#",
 	"contentVersion": "1.0.0.0",
 	"parameters": {
-		"azureUser": {
-			"type": "string"
-		},
-		"azurePassword": {
-			"type": "securestring"
-		},
 		"adminUsername": {
 			"type": "string"
 		},
@@ -43,12 +37,6 @@
 				"parameters": {
 					"location": {
 						"value": "[variables('location')]"
-					},
-					"azureUser": {
-						"value": "[parameters('azureUser')]"
-					},
-					"azurePassword": {
-						"value": "[parameters('azurePassword')]"
 					}
 				}
 			}

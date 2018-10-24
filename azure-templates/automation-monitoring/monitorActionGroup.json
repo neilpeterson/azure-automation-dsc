@@ -27,7 +27,7 @@
               "name": "email",
               "emailAddress": "[parameters('email')]"
             }
-          ],
+          ]
         }
       }
     ],
