@@ -15,7 +15,10 @@
 		"configurationDescription": "A configuration for installing IIS.",
 		"configurationURI": "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/master/support-scripts/windows-config.ps1",
 		"nodeConfigurationName": "features.localhost",
-		"automationAccountName": "[uniqueString(resourceGroup().id)]"
+		"automationAccountName": "[uniqueString(resourceGroup().id)]",
+		"name": "cpu-leak",
+		"location": "westeurope",
+		"scriptURI": "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/master/support-scripts/cpu-leak.ps1"
 	},
 	"resources": [{
 			"name": "[variables('automationAccountName')]",
@@ -61,6 +64,18 @@
 					"properties": {
 						"configuration": {
 							"name": "[variables('configurationName')]"
+						}
+					}
+				},
+				{
+					"apiVersion": "2015-10-31",
+					"type": "Microsoft.Automation/automationAccounts/runbooks",
+					"name": "[variables('name')]",
+					"location": "[variables('location')]",
+					"properties": {
+						"runbookType": "PowerShell",
+						"publishContentLink": {
+							"uri": "[variables('scriptURI')]"
 						}
 					}
 				}
