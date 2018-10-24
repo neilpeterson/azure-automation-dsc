@@ -8,6 +8,9 @@
             "metadata": {
                 "description": "Full path of the resource group(s) where target resources to be monitored are in. For example - /subscriptions/00000000-0000-0000-0000-0000-00000000/resourceGroups/ResourceGroupName"
             }
+        },
+        "actionGroupId": {
+            "type": "string"
         }
     },
     "variables": {
@@ -22,8 +25,7 @@
         "threshold": "30",
         "timeAggregation": "Average",
         "windowSize": "PT5M",
-        "evaluationFrequency": "PT1M",
-        "actionGroupId": "/subscriptions/3762d87c-ddb8-425f-b2fc-29e5e859edaf/resourceGroups/Default-ActivityLogAlerts/providers/microsoft.insights/actionGroups/testactiongroup"
+        "evaluationFrequency": "PT1M"
     },
     "resources": [
         {
@@ -56,7 +58,7 @@
                 },
                 "actions": [
                     {
-                        "actionGroupId": "[variables('actionGroupId')]"
+                        "actionGroupId": "[parameters('actionGroupId')]"
                     }
                 ]
             }

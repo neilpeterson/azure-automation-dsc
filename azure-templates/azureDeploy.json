@@ -194,7 +194,10 @@
 				"parameters": {
 					"targetResourceGroup": {
 						"value": "[resourceGroup().id]"
-					}
+					},
+					"actionGroupId": {
+						"value": "[reference('AzureMonitorActionGroup').outputs.actionGroupId.value]"
+					},
 				}
 			}
 		}
