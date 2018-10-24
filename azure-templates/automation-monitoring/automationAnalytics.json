@@ -7,6 +7,12 @@
 			"metadata": {
 			  "description": "The region of the Log Analytics workspace."
 			}
+		},
+		"azureUser": {
+			"type": "string"
+		},
+		"azurePassword": {
+			"type": "secureString"
 		}
 	},
 	"variables": {
@@ -82,7 +88,21 @@
 							"uri": "[variables('scriptURI')]"
 						}
 					}
-				}
+				},
+				{
+					"name": "azureCredentials",
+					"type": "credentials",
+					"apiVersion": "2015-10-31",
+					"location": "[resourceGroup().location]",
+					"dependsOn": [
+						"[concat('Microsoft.Automation/automationAccounts/', variables('automationAccountName'))]"
+					],
+					"tags": { },
+					"properties": {
+					  "userName": "[parameters('azureUser')]",
+					  "password": "[parameters('azurePassword')]"
+					}
+				  }
 			]
 		},
 		{
