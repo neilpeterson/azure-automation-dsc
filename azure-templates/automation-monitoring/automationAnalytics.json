@@ -7,12 +7,6 @@
 			"metadata": {
 			  "description": "The region of the Log Analytics workspace."
 			}
-		},
-		"azureUser": {
-			"type": "string"
-		},
-		"azurePassword": {
-			"type": "secureString"
 		}
 	},
 	"variables": {
@@ -22,9 +16,9 @@
 		"configurationURI": "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/master/support-scripts/windows-config.ps1",
 		"nodeConfigurationName": "features.localhost",
 		"automationAccountName": "[uniqueString(resourceGroup().id)]",
-		"name": "cpu-leak",
+		"name": "cpu-alert-to-teams",
 		"location": "westeurope",
-		"scriptURI": "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/master/support-scripts/cpu-leak.ps1"
+		"scriptURI": "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/master/support-scripts/run-ps-script-vm.ps1"
 	},
 	"resources": [{
 			"name": "[variables('automationAccountName')]",
@@ -88,21 +82,7 @@
 							"uri": "[variables('scriptURI')]"
 						}
 					}
-				},
-				{
-					"name": "azureCredentials",
-					"type": "credentials",
-					"apiVersion": "2015-10-31",
-					"location": "[resourceGroup().location]",
-					"dependsOn": [
-						"[concat('Microsoft.Automation/automationAccounts/', variables('automationAccountName'))]"
-					],
-					"tags": { },
-					"properties": {
-					  "userName": "[parameters('azureUser')]",
-					  "password": "[parameters('azurePassword')]"
-					}
-				  }
+				}
 			]
 		},
 		{
