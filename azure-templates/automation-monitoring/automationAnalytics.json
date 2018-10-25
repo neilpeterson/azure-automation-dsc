@@ -97,7 +97,8 @@
 			"tags": {},
 			"properties": {
 			  "description": "test",
-			  "value": "test"
+			  "value": "[concat('\"','test','\"')]"
+
 			}
 		  },
 		{
