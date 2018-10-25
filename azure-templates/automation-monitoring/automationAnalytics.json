@@ -87,7 +87,8 @@
 					"type": "webhooks",
 					"apiVersion": "2015-10-31",
 					"dependsOn": [
-						"[concat('Microsoft.Automation/automationAccounts/', variables('automationAccountName'))]"
+						"[concat('Microsoft.Automation/automationAccounts/', variables('automationAccountName'))]",
+						"[concat('Microsoft.Automation/automationAccounts/', variables('automationAccountName'), '/runbooks/', variables('name'))]"
 					],
 					"properties": {
 						"isEnabled": true,
