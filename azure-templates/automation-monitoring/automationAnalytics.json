@@ -88,18 +88,18 @@
 			]
 		},
 		{
-			"apiVersion": "2018-01-15",
-			"type": "Microsoft.Automation/automationAccounts/variables",
-			"name": "[concat('Microsoft.Automation/automationAccounts/', variables('automationAccountName'), '/variables/', variables('name'))]",
-			"dependsOn": [
-				"[concat('Microsoft.Automation/automationAccounts/', variables('automationAccountName'))]"
-			],
-			"properties": {
-				"value": "test",
-				"description": "test",
-				"isEncrypted": false
-			  }
-		},
+            "name": "[concat('Microsoft.Automation/automationAccounts/', variables('automationAccountName'), '/variables/', variables('name'))]",
+            "type" : "microsoft.automation/automationAccounts/variables",
+            "apiVersion": "2015-01-01-preview",
+            "location": "[variables('location')]",
+            "tags": { },
+            "properties": {
+                "description": "",
+                "isEncrypted": 1,
+                "type": "string",
+                "value": "test"
+            }
+        },
 		{
 			"type": "Microsoft.OperationalInsights/workspaces",
 			"name": "[variables('automationAccountName')]",
