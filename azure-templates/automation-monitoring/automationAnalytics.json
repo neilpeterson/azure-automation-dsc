@@ -88,7 +88,7 @@
 			]
 		},
 		{
-            "name": "[concat('microsoft.automation/', variables('automationAccountName'), '/', variables('name'))]",
+            "name": "[concat('Microsoft.Automation/', variables('automationAccountName'), '/', variables('name'))]",
             "type" : "Microsoft.Automation/automationAccounts/variables",
             "apiVersion": "2015-10-31",
             "location": "[variables('location')]",
