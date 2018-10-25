@@ -10,16 +10,16 @@
 		}
     },
     "variables": {
-      "actionGroupName": "test"
+      "actionGroupName": "email"
     },
     "resources": [
       {
         "type": "Microsoft.Insights/actionGroups",
         "apiVersion": "2018-03-01",
-        "name": "email",
+        "name": "[variables('actionGroupName')]",
         "location": "Global",
         "properties": {
-          "groupShortName": "email",
+          "groupShortName": "em",
           "enabled": true,
           "emailReceivers": [
             {
