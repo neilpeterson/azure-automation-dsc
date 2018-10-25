@@ -57,7 +57,7 @@
 				{
 					"name": "[variables('configurationName')]",
 					"type": "compilationjobs",
-					"apiVersion": "2018-01-15",
+					"apiVersion": "2015-10-31",
 					"location": "parameters('location')]",
 					"tags": {},
 					"dependsOn": [
@@ -88,18 +88,18 @@
 			]
 		},
 		{
-            "name": "[concat('Microsoft.Automation/', variables('automationAccountName'), '/', variables('name'))]",
-            "type" : "Microsoft.Automation/automationAccounts/variables",
-            "apiVersion": "2015-10-31",
-            "location": "[variables('location')]",
-            "tags": { },
-            "properties": {
-                "description": "",
-                "isEncrypted": false,
-                "type": "string",
-                "value": "test"
-            }
-        },
+			"name": "[concat(variables('automationAccountName'), '/', 'test')]",
+			"type": "Microsoft.Automation/automationAccounts/variables",
+			"apiVersion": "2015-10-31",
+			"dependsOn": [
+			  "[resourceId('Microsoft.Automation/automationAccounts', variables('automationAccountName'))]"
+			],
+			"tags": {},
+			"properties": {
+			  "description": "test",
+			  "value": "test"
+			}
+		  },
 		{
 			"type": "Microsoft.OperationalInsights/workspaces",
 			"name": "[variables('automationAccountName')]",
