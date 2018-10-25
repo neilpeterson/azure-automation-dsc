@@ -21,7 +21,8 @@
 		"scriptURI": "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/master/support-scripts/run-ps-script-vm.ps1",
 		"teamsURI": "https://outlook.office.com/webhook/3b51bf6b-dc4c-46ca-944d-4c3e493fb4dc@72f988bf-86f1-41af-91ab-2d7cd011db47/IncomingWebhook/5b5ab0dfd35043c69ee8c0f476c0b5a0/b0959e18-c917-49ec-9a03-b91957a24836"
 	},
-	"resources": [{
+	"resources": [
+		{
 			"name": "[variables('automationAccountName')]",
 			"type": "Microsoft.Automation/automationAccounts",
 			"apiVersion": "2015-10-31",
