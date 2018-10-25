@@ -29,15 +29,17 @@ Running `azureDeploy.json` results in the following:
 - X VMs created and onboarded into DSC
 - VMs configured with the DSC configuration and report as compliant
 - VMs are onboarded to inventory, change tracking, software update solutions
-- Azure Monitor Action Group is created
+- Azure Monitor Action Group is created (email at moment / will switch to Runbook)
 - Azurre Monitor alert is created and applied to all VMs in RG
+
+## In Progress:
+
+- Creation of Runbook to send Azure Monitor alerts to Teams
 
 ## TODO:
 
-- Add functionality to post alert to teams
 - Dashboard Resource ID is not working
 - Add Azure Automation Runbook to break x number of VM so they return non-compliant
-- Add VM configuation to install CPU spike tool
-- Add Runbook to invoke spike tool
+- Add Runbook to CPU invoke spike tool for Monitoring demo
 - Add Software update deployment
 - Add some VM inventory automation
