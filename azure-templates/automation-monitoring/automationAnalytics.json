@@ -57,7 +57,7 @@
 				{
 					"name": "[variables('configurationName')]",
 					"type": "compilationjobs",
-					"apiVersion": "2015-10-31",
+					"apiVersion": "2018-01-15",
 					"location": "parameters('location')]",
 					"tags": {},
 					"dependsOn": [
