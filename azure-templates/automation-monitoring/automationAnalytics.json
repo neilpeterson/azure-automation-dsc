@@ -88,7 +88,7 @@
 			]
 		},
 		{
-			"apiVersion": "2015-10-31",
+			"apiVersion": "2018-01-15",
 			"type": "Microsoft.Automation/automationAccounts/variables",
 			"name": "[concat('Microsoft.Automation/automationAccounts/', variables('automationAccountName'), '/variables/', variables('name'))]",
 			"dependsOn": [
