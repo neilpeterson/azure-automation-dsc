@@ -83,21 +83,21 @@
 							"uri": "[variables('scriptURI')]"
 						}
 					}
-				},
-				{
-					"apiVersion": "2015-10-31",
-					"type": "variables",
-					"name": "[variables('name')]",
-					"dependsOn": [
-						"[concat('Microsoft.Automation/automationAccounts/', variables('automationAccountName'))]"
-					],
-					"properties": {
-						"value": "test",
-						"description": "test",
-						"isEncrypted": false
-					  }
 				}
 			]
+		},
+		{
+			"apiVersion": "2015-10-31",
+			"type": "variables",
+			"name": "[concat(variables('automationAccountName'), '/', variables('name')) ]",
+			"dependsOn": [
+				"[concat('Microsoft.Automation/automationAccounts/', variables('automationAccountName'))]"
+			],
+			"properties": {
+				"value": "test",
+				"description": "test",
+				"isEncrypted": false
+			  }
 		},
 		{
 			"type": "Microsoft.OperationalInsights/workspaces",
