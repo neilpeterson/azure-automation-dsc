@@ -21,8 +21,7 @@
 		"solutionsURI": "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/master/azure-templates/automation-monitoring/automationSolutions.json",
 		"linkAccountsURI": "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/master/azure-templates/automation-monitoring/linkedWorkspaceAccount.json",
 		"azureMonitorAlert": "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/master/azure-templates/automation-monitoring/monitorAlert.json",
-		"azureMonitorActionGroupURI": "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/master/azure-templates/automation-monitoring/monitorActionGroup.json",
-		"location": "westeurope"
+		"azureMonitorActionGroupURI": "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/master/azure-templates/automation-monitoring/monitorActionGroup.json"
 	},
 	"resources": [{
 			"apiVersion": "2018-05-01",
@@ -35,9 +34,6 @@
 					"contentVersion": "1.0.0.0"
 				},
 				"parameters": {
-					"location": {
-						"value": "[variables('location')]"
-					}
 				}
 			}
 		},
@@ -55,9 +51,6 @@
 					"contentVersion": "1.0.0.0"
 				},
 				"parameters": {
-					"location": {
-						"value": "[variables('location')]"
-					},
 					"workspaceName": {
 						"value": "[reference('automationAnalytics').outputs.automationAccountName.value]"
 					},
@@ -81,9 +74,6 @@
 					"contentVersion": "1.0.0.0"
 				},
 				"parameters": {
-					"location": {
-						"value": "[variables('location')]"
-					},
 					"workspaceName": {
 						"value": "[reference('automationAnalytics').outputs.automationAccountName.value]"
 					},
@@ -117,9 +107,6 @@
 					},
 					"workspaceName": {
 						"value": "[reference('automationAnalytics').outputs.automationAccountName.value]"
-					},
-					"workspaceRegion": {
-						"value": "[variables('location')]"
 					}
 				}
 			}

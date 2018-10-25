@@ -2,12 +2,6 @@
 	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
 	"contentVersion": "1.0.0.0",
 	"parameters": {
-		"location": {
-			"type": "string",
-			"metadata": {
-				"description": "The region of the Log Analytics workspace."
-			}
-		},
 		"workspaceName": {
 			"type": "string",
 			"metadata": {
@@ -25,7 +19,7 @@
 	"resources": [{
 		"apiVersion": "2015-11-01-preview",
 		"type": "Microsoft.OperationsManagement/solutions",
-		"location": "[parameters('location')]",
+		"location": "[resourceGroup().location]",
 		"name": "[concat(parameters('solutionName'),'(', parameters('workspaceName'),')')]",
 		"dependsOn": [
 		],

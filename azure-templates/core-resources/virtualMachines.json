@@ -33,7 +33,6 @@
 		"vmName": "win-vm-",
 		"virtualNetworkName": "virtial-network",
 		"windowsOSVersion": "2016-Datacenter",
-		"location": "[resourceGroup().location]",
 		"subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('subnetName'))]",
 		"dscExtensionModulesUrl": "https://github.com/Azure/azure-quickstart-templates/raw/master/dsc-extension-azure-automation-pullserver/UpdateLCMforAAPull.zip",
 		"dscExtensionConfigurationFunction": "UpdateLCMforAAPull.ps1\\ConfigureLCMforAAPull"
@@ -42,7 +41,7 @@
 			"apiVersion": "2016-03-30",
 			"type": "Microsoft.Network/publicIPAddresses",
 			"name": "[concat(variables('publicIPAddressName'), copyIndex())]",
-			"location": "[variables('location')]",
+			"location": "[resourceGroup().location]",
 			"properties": {
 				"publicIPAllocationMethod": "Dynamic"
 			},
@@ -55,7 +54,7 @@
 			"apiVersion": "2016-03-30",
 			"type": "Microsoft.Network/virtualNetworks",
 			"name": "[variables('virtualNetworkName')]",
-			"location": "[variables('location')]",
+			"location": "[resourceGroup().location]",
 			"properties": {
 				"addressSpace": {
 					"addressPrefixes": [
@@ -74,7 +73,7 @@
 			"apiVersion": "2016-03-30",
 			"type": "Microsoft.Network/networkInterfaces",
 			"name": "[concat(variables('nicName'), copyIndex())]",
-			"location": "[variables('location')]",
+			"location": "[resourceGroup().location]",
 			"dependsOn": [
 				"[resourceId('Microsoft.Network/publicIPAddresses/', concat(variables('publicIPAddressName'), copyIndex()))]",
 				"[resourceId('Microsoft.Network/virtualNetworks/', variables('virtualNetworkName'))]"
@@ -102,7 +101,7 @@
 			"apiVersion": "2017-03-30",
 			"type": "Microsoft.Compute/virtualMachines",
 			"name": "[concat(variables('vmName'), copyIndex())]",
-			"location": "[variables('location')]",
+			"location": "[resourceGroup().location]",
 			"dependsOn": [
 				"[concat(variables('nicName'), copyIndex())]"
 			],
@@ -141,7 +140,7 @@
 			"type": "Microsoft.Compute/virtualMachines/extensions",
 			"name": "[concat(variables('vmName'), copyIndex(), '/Microsoft.Powershell.DSC')]",
 			"apiVersion": "2015-06-15",
-			"location": "[variables('location')]",
+			"location": "[resourceGroup().location]",
 			"dependsOn": [
 				"[concat('Microsoft.Compute/virtualMachines/', variables('vmName'), copyIndex())]"
 			],
