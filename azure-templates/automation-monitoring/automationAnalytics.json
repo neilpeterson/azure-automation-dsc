@@ -32,7 +32,8 @@
 					"name": "Basic"
 				}
 			},
-			"resources": [{
+			"resources": [
+				{
 					"name": "[variables('configurationName')]",
 					"type": "configurations",
 					"apiVersion": "2015-10-31",
@@ -82,6 +83,19 @@
 							"uri": "[variables('scriptURI')]"
 						}
 					}
+				},
+				{
+					"apiVersion": "2015-10-31",
+					"type": "variables",
+					"name": "[variables('name')]",
+					"dependsOn": [
+						"[concat('Microsoft.Automation/automationAccounts/', variables('automationAccountName'))]"
+					],
+					"properties": {
+						"value": "test",
+						"description": "test",
+						"isEncrypted": false
+					  }
 				}
 			]
 		},
