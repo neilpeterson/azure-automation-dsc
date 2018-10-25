@@ -11,7 +11,17 @@
 		"VMCount": {
 			"type": "int"
 		},
+		"alertType": {
+			"type": "string",
+			"allowedValues": [
+				"email",
+				"MSTeams"
+			]
+		},
 		"email": {
+			"type": "string"
+		},
+		"msTeamsURI": {
 			"type": "string"
 		}
 	},

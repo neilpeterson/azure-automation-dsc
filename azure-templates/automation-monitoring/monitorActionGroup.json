@@ -10,22 +10,31 @@
 		}
     },
     "variables": {
-        "actionGroupName": "testActionGroup",
-        "actionGroupShortName": "tag"
+      "actionGroupName": "test"
     },
     "resources": [
       {
         "type": "Microsoft.Insights/actionGroups",
         "apiVersion": "2018-03-01",
-        "name": "[variables('actionGroupName')]",
+        "name": "email",
         "location": "Global",
         "properties": {
-          "groupShortName": "[variables('actionGroupShortName')]",
+          "groupShortName": "email",
           "enabled": true,
           "emailReceivers": [
             {
               "name": "email",
               "emailAddress": "[parameters('email')]"
+            }
+          ],
+          "automationRunbookReceivers": [
+            {
+              "automationAccountId": "string",
+              "runbookName": "string",
+              "webhookResourceId": "string",
+              "isGlobalRunbook": false,
+              "name": "string",
+              "serviceUri": "string"
             }
           ]
         }
