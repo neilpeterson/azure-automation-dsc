@@ -32,14 +32,10 @@ Running `azureDeploy.json` results in the following:
 - Azure Monitor Action Group is created (email at moment / will switch to Runbook)
 - Azurre Monitor alert is created and applied to all VMs in RG
 
-## In Progress:
-
-- Creation of Runbook to send Azure Monitor alerts to Teams
 
 ## TODO:
 
 - Dashboard Resource ID is not working
 - Add Azure Automation Runbook to break x number of VM so they return non-compliant
-- Add Runbook to CPU invoke spike tool for Monitoring demo
 - Add Software update deployment
 - Add some VM inventory automation

@@ -1,41 +1,33 @@
 {
 	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json",
 	"contentVersion": "1.0.0.0",
-	"parameters": {
-		"location": {
-			"type": "string",
-			"metadata": {
-				"description": "The region of the Log Analytics workspace."
-			}
-		}
-	},
+	"parameters": {},
 	"variables": {
 		"insights-sku": "standard",
 		"configurationName": "windows-features",
 		"configurationDescription": "A configuration for installing IIS.",
 		"configurationURI": "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/master/support-scripts/windows-config.ps1",
 		"nodeConfigurationName": "features.localhost",
-		"automationAccountName": "[uniqueString(resourceGroup().id)]",
-		"name": "cpu-alert-to-teams",
-		"location": "westeurope",
-		"scriptURI": "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/master/support-scripts/alert-to-teams-runbook.ps1"
+		"automationAccountName": "[uniqueString(resourceGroup().id)]"
 	},
-	"resources": [{
+	"resources": [
+		{
 			"name": "[variables('automationAccountName')]",
 			"type": "Microsoft.Automation/automationAccounts",
 			"apiVersion": "2015-10-31",
-			"location": "[parameters('location')]",
+			"location": "[resourceGroup().location]",
 			"comments": "Automation account for OMS",
 			"properties": {
 				"sku": {
 					"name": "Basic"
 				}
 			},
-			"resources": [{
+			"resources": [
+				{
 					"name": "[variables('configurationName')]",
 					"type": "configurations",
 					"apiVersion": "2015-10-31",
-					"location": "[parameters('location')]",
+					"location": "[resourceGroup().location]",
 					"tags": {},
 					"dependsOn": [
 						"[concat('Microsoft.Automation/automationAccounts/', variables('automationAccountName'))]"
@@ -66,59 +58,14 @@
 							"name": "[variables('configurationName')]"
 						}
 					}
-				},
-				{
-					"apiVersion": "2015-10-31",
-					"type": "runbooks",
-					"name": "[variables('name')]",
-					"dependsOn": [
-						"[concat('Microsoft.Automation/automationAccounts/', variables('automationAccountName'))]"
-					],
-					"location": "[variables('location')]",
-					"properties": {
-						"runbookType": "PowerShell",
-						"publishContentLink": {
-							"uri": "[variables('scriptURI')]"
-						}
-					}
-				},
-				{
-					"name": "string",
-					"type": "webhooks",
-					"apiVersion": "2015-10-31",
-					"dependsOn": [
-						"[concat('Microsoft.Automation/automationAccounts/', variables('automationAccountName'))]",
-						"[concat('Microsoft.Automation/automationAccounts/', variables('automationAccountName'), '/runbooks/', variables('name'))]"
-					],
-					"properties": {
-						"isEnabled": true,
-						"parameters": {},
-						"runbook": {
-							"name": "[variables('name')]"
-						}
-					}
 				}
 			]
-		},
-		{
-			"name": "[concat(variables('automationAccountName'), '/', 'test')]",
-			"type": "Microsoft.Automation/automationAccounts/variables",
-			"apiVersion": "2015-10-31",
-			"dependsOn": [
-				"[resourceId('Microsoft.Automation/automationAccounts', variables('automationAccountName'))]"
-			],
-			"tags": {},
-			"properties": {
-				"description": "test",
-				"value": "[concat('\"','test','\"')]"
-
-			}
 		},
 		{
 			"type": "Microsoft.OperationalInsights/workspaces",
 			"name": "[variables('automationAccountName')]",
 			"apiVersion": "2015-11-01-preview",
-			"location": "[parameters('location')]",
+			"location": "[resourceGroup().location]",
 			"properties": {
 				"sku": {
 					"name": "[variables('insights-sku')]"

@@ -26,16 +26,6 @@
               "name": "email",
               "emailAddress": "[parameters('email')]"
             }
-          ],
-          "automationRunbookReceivers": [
-            {
-              "automationAccountId": "string",
-              "runbookName": "string",
-              "webhookResourceId": "string",
-              "isGlobalRunbook": false,
-              "name": "string",
-              "serviceUri": "string"
-            }
           ]
         }
       }
