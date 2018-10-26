@@ -22,7 +22,7 @@
         "targetResourceRegion": "westeurope",
         "metricName": "Percentage CPU",
         "operator": "GreaterThan",
-        "threshold": "50",
+        "threshold": "70",
         "timeAggregation": "Average",
         "windowSize": "PT5M",
         "evaluationFrequency": "PT1M"
