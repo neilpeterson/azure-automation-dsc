@@ -4,9 +4,11 @@
 	"parameters": {},
 	"variables": {
 		"insights-sku": "standard",
+		"linuxConfigurationName": "linux-package",
 		"configurationName": "windows-features",
 		"configurationDescription": "A configuration for installing IIS.",
 		"configurationURI": "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/master/support-scripts/windows-config.ps1",
+		"linuxConfigurationURI": "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/master/support-scripts/windows-config.ps1",
 		"nodeConfigurationName": "features.localhost",
 		"automationAccountName": "[uniqueString(resourceGroup().id)]"
 	},
@@ -23,6 +25,26 @@
 				}
 			},
 			"resources": [
+				{
+					"name": "[variables('linuxConfigurationName')]",
+					"type": "configurations",
+					"apiVersion": "2015-10-31",
+					"location": "[resourceGroup().location]",
+					"tags": {},
+					"dependsOn": [
+						"[concat('Microsoft.Automation/automationAccounts/', variables('automationAccountName'))]"
+					],
+					"properties": {
+						"logVerbose": true,
+						"description": "[variables('configurationDescription')]",
+						"state": "Published",
+						"overwrite": "true",
+						"source": {
+							"type": "uri",
+							"value": "[variables('linuxConfigurationURI')]"
+						}
+					}
+				},
 				{
 					"name": "[variables('configurationName')]",
 					"type": "configurations",
