@@ -4,8 +4,8 @@
 	"parameters": {},
 	"variables": {
 		"insights-sku": "standard",
-		"linuxConfigurationName": "linux-package",
-		"configurationName": "windows-features",
+		"linuxConfigurationName": "linuxpackage",
+		"configurationName": "windowsfeatures",
 		"configurationDescription": "A configuration for installing IIS.",
 		"configurationURI": "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/master/support-scripts/windows/windows-config.ps1",
 		"linuxConfigurationURI": "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/master/support-scripts/linux/linux-config.ps1",
@@ -35,7 +35,7 @@
 						"[concat('Microsoft.Automation/automationAccounts/', variables('automationAccountName'))]"
 					],
 					"properties": {
-						"logVerbose": true,
+						"logVerbose": "false",
 						"description": "[variables('configurationDescription')]",
 						"state": "Published",
 						"overwrite": "true",
@@ -55,7 +55,7 @@
 						"[concat('Microsoft.Automation/automationAccounts/', variables('automationAccountName'))]"
 					],
 					"properties": {
-						"logVerbose": true,
+						"logVerbose": "false",
 						"description": "[variables('configurationDescription')]",
 						"state": "Published",
 						"overwrite": "true",
@@ -78,6 +78,22 @@
 					"properties": {
 						"configuration": {
 							"name": "[variables('configurationName')]"
+						}
+					}
+				},
+				{
+					"name": "[variables('linuxConfigurationName')]",
+					"type": "compilationjobs",
+					"apiVersion": "2018-01-15",
+					"location": "[resourceGroup().location]",
+					"tags": {},
+					"dependsOn": [
+						"[concat('Microsoft.Automation/automationAccounts/', variables('automationAccountName'))]",
+						"[concat('Microsoft.Automation/automationAccounts/', variables('automationAccountName'), '/configurations/', variables('linuxConfigurationName'))]"
+					],
+					"properties": {
+						"configuration": {
+							"name": "[variables('linuxConfigurationName')]"
 						}
 					}
 				}

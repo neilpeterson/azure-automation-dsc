@@ -7,7 +7,7 @@
     Intent: Configure Linux system for Ignite Tour LP4S3.
  #>
 
- configuration linux-package {
+ configuration linuxpackage {
 
     param
     (

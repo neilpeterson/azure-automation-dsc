@@ -7,7 +7,7 @@
     Intent: Configure Windows system for Ignote Tour LP4S3.
  #>
 
- configuration windows-features {
+ configuration windowsfeatures {
 
     param
     (
