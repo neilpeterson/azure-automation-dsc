@@ -14,6 +14,7 @@
         [string[]]$NodeName = 'localhost'
     )
 
+    Import-DscResource -ModuleName PsDesiredStateConfiguration
     Import-DSCResource -Module nx
 
     Node $node {
