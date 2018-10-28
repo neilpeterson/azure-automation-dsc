@@ -9,15 +9,10 @@
 
  configuration linuxpackage {
 
-    param
-    (
-        [string[]]$NodeName = 'localhost'
-    )
-
     Import-DscResource -ModuleName PsDesiredStateConfiguration
     Import-DSCResource -Module nx
 
-    Node $node {
+    Node "localhost" {
 
         nxPackage httpd {
             Name = "httpd"
