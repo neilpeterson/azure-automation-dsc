@@ -8,7 +8,7 @@
 		"configurationName": "windows-features",
 		"configurationDescription": "A configuration for installing IIS.",
 		"configurationURI": "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/master/support-scripts/windows-config.ps1",
-		"linuxConfigurationURI": "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/master/support-scripts/windows-config.ps1",
+		"linuxConfigurationURI": "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/master/support-scripts/windows/windows-config.ps1",
 		"nodeConfigurationName": "features.localhost",
 		"automationAccountName": "[uniqueString(resourceGroup().id)]"
 	},
