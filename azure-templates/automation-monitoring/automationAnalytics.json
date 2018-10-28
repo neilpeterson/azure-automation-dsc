@@ -80,22 +80,6 @@
 							"name": "[variables('configurationName')]"
 						}
 					}
-				},
-				{
-					"name": "[variables('linuxConfigurationName')]",
-					"type": "compilationjobs",
-					"apiVersion": "2018-01-15",
-					"location": "[resourceGroup().location]",
-					"tags": {},
-					"dependsOn": [
-						"[concat('Microsoft.Automation/automationAccounts/', variables('automationAccountName'))]",
-						"[concat('Microsoft.Automation/automationAccounts/', variables('automationAccountName'), '/configurations/', variables('linuxConfigurationName'))]"
-					],
-					"properties": {
-						"configuration": {
-							"name": "[variables('linuxConfigurationName')]"
-						}
-					}
 				}
 			]
 		},
