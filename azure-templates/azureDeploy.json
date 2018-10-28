@@ -8,7 +8,10 @@
 		"adminPassword": {
 			"type": "securestring"
 		},
-		"VMCount": {
+		"WindowsVMCount": {
+			"type": "int"
+		},
+		"LinuxVMCount": {
 			"type": "int"
 		},
 		"email": {
@@ -17,13 +20,15 @@
 	},
 	"variables": {
 		"automationAnalyticsURI": "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/master/azure-templates/automation-monitoring/automationAnalytics.json",
-		"virtualMachineURI": "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/master/azure-templates/core-resources/virtualMachines.json",
+		"windowsVirtualMachineURI": "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/master/azure-templates/core-resources/windowsVirtualMachines.json",
+		"linuxVirtualMachineURI": "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/master/azure-templates/core-resources/linuxVirtualMachines.json",
 		"solutionsURI": "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/master/azure-templates/automation-monitoring/automationSolutions.json",
 		"linkAccountsURI": "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/master/azure-templates/automation-monitoring/linkedWorkspaceAccount.json",
 		"azureMonitorAlert": "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/master/azure-templates/automation-monitoring/monitorAlert.json",
 		"azureMonitorActionGroupURI": "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/master/azure-templates/automation-monitoring/monitorActionGroup.json"
 	},
-	"resources": [{
+	"resources": [
+		{
 			"apiVersion": "2018-05-01",
 			"name": "automationAnalytics",
 			"type": "Microsoft.Resources/deployments",
@@ -112,14 +117,32 @@
 			}
 		},
 		{
-			"apiVersion": "2018-05-01",
-			"name": "virtualMachine",
 			"type": "Microsoft.Resources/deployments",
-			"dependsOn": ["Microsoft.Resources/deployments/automationAnalytics"],
+			"apiVersion": "2018-05-01",
+			"name": "VirtualNetwork",
 			"properties": {
 				"mode": "Incremental",
 				"templateLink": {
-					"uri": "[variables('virtualMachineURI')]",
+					"uri": "[variables('solutionsURI')]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+				}
+			}
+		},
+		{
+			"condition": "[greaterOrEquals(parameters('WindowsVMCount'), '1')]",
+			"apiVersion": "2018-05-01",
+			"name": "windowsVirtualMachine",
+			"type": "Microsoft.Resources/deployments",
+			"dependsOn": [
+				"Microsoft.Resources/deployments/automationAnalytics",
+				"Microsoft.Resources/deployments/VirtualNetwork"
+			],
+			"properties": {
+				"mode": "Incremental",
+				"templateLink": {
+					"uri": "[variables('windowsVirtualMachineURI')]",
 					"contentVersion": "1.0.0.0"
 				},
 				"parameters": {
@@ -130,7 +153,44 @@
 						"value": "[parameters('adminPassword')]"
 					},
 					"vmCount": {
-						"value": "[parameters('vmCount')]"
+						"value": "[parameters('WindowsVMCount')]"
+					},
+					"registrationKey": {
+						"value": "[reference('automationAnalytics').outputs.registrationKey.value]"
+					},
+					"registrationUrl": {
+						"value": "[reference('automationAnalytics').outputs.registrationUrl.value]"
+					},
+					"nodeConfigurationName": {
+						"value": "[reference('automationAnalytics').outputs.nodeConfigurationName.value]"
+					},
+					"logAnalyticsName": {
+						"value": "[reference('automationAnalytics').outputs.automationAccountName.value]"
+					}
+				}
+			}
+		},
+		{
+			"condition": "[greaterOrEquals(parameters('LinuxVMCount'), '1')]",
+			"apiVersion": "2018-05-01",
+			"name": "linuxVirtualMachine",
+			"type": "Microsoft.Resources/deployments",
+			"dependsOn": ["Microsoft.Resources/deployments/automationAnalytics"],
+			"properties": {
+				"mode": "Incremental",
+				"templateLink": {
+					"uri": "[variables('linuxVirtualMachineURI')]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"adminUsername": {
+						"value": "[parameters('adminUsername')]"
+					},
+					"adminPassword": {
+						"value": "[parameters('adminPassword')]"
+					},
+					"vmCount": {
+						"value": "[parameters('LinuxVMCount')]"
 					},
 					"registrationKey": {
 						"value": "[reference('automationAnalytics').outputs.registrationKey.value]"
