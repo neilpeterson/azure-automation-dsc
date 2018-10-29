@@ -121,7 +121,7 @@
 			"properties": {
 			  "publisher": "Microsoft.OSTCExtensions",
 			  "type": "DSCForLinux",
-			  "typeHandlerVersion": "2.0",
+			  "typeHandlerVersion": "2.4",
 			  "settings": {
 				"Mode": "Push"
 			  },
