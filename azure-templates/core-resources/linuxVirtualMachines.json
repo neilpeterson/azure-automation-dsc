@@ -35,7 +35,7 @@
 		"publicIPAddressName": "public-ip-linux-",
 		"vmName": "linux-vm-",
 		"windowsOSVersion": "16.04.0-LTS",
-		"subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), parameters('subnetName'))]",
+		"subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), parameters('subnetName'))]"
 	},
 	"resources": [{
 			"apiVersion": "2016-03-30",
@@ -164,6 +164,10 @@
 			  "protectedSettings": {
 				"workspaceKey": "[listKeys(resourceId(resourceGroup().name, 'Microsoft.OperationalInsights/workspaces/', parameters('logAnalyticsName')), '2015-11-01-preview').primarySharedKey]"
 			  }
+			},
+			"copy": {
+				"name": "vmcopy",
+				"count": "[parameters('vmCount')]"
 			}
 		  }
 	],
