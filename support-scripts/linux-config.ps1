@@ -15,9 +15,9 @@
     Node "localhost" {
 
         nxPackage httpd {
-            Name = "httpd"
+            Name = "nginx"
             Ensure = "Present"
-            PackageManager = "Yum"
+            PackageManager = "apt"
         }
     }
 }
