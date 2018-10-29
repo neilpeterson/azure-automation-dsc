@@ -148,7 +148,7 @@
 		},
 		{
 			"type": "Microsoft.Compute/virtualMachines/extensions",
-			"name": "[concat(variables('vmName'), copyIndex(),'/OMSExtension')]",
+			"name": "[concat(variables('vmName'), copyIndex(),'/Microsoft.Monitoring')]",
 			"apiVersion": "2018-06-01",
 			"location": "[resourceGroup().location]",
 			"dependsOn": [
