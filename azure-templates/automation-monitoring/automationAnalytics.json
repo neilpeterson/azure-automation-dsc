@@ -10,6 +10,7 @@
 		"configurationURI": "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/master/support-scripts/windows-config.ps1",
 		"linuxConfigurationURI": "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/master/support-scripts/linux-config.ps1",
 		"nodeConfigurationName": "windowsfeatures.localhost",
+		"linuxNodeConfigurationName": "linuxpackage.localhost",
 		"automationAccountName": "[uniqueString(resourceGroup().id)]",
 		"moduleUri": "https://devopsgallerystorage.blob.core.windows.net/packages/nx.1.0.0.nupkg"
 	},
@@ -148,6 +149,10 @@
 		"nodeConfigurationName": {
 			"type": "string",
 			"value": "[variables('nodeConfigurationName')]"
+		},
+		"linuxNodeConfigurationName": {
+			"type": "string",
+			"value": "[variables('linuxNodeConfigurationName')]"
 		}
 	}
 }

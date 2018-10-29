@@ -22,6 +22,9 @@
 		},
 		"registrationUrl": {
 			"type": "string"
+		},
+		"nodeConfigurationName": {
+			"type": "string"
 		}
 	},
 	"variables": {
@@ -104,6 +107,36 @@
 						"id": "[resourceId('Microsoft.Network/networkInterfaces', concat(variables('nicName'), copyIndex()))]"
 					}]
 				}
+			},
+			"copy": {
+				"name": "vmcopy",
+				"count": "[parameters('vmCount')]"
+			}
+		},
+		{
+			"apiVersion": "2017-12-01",
+			"type": "Microsoft.Compute/virtualMachines/extensions",
+			"name": "[concat(variables('vmName'), copyIndex(),'/enabledsc')]",
+			"location": "[resourceGroup().location]",
+			"dependsOn": [
+			  "[concat('Microsoft.Compute/virtualMachines/', variables('vmName'), copyIndex())]"
+			],
+			"properties": {
+			  "publisher": "Microsoft.OSTCExtensions",
+			  "type": "DSCForLinux",
+			  "typeHandlerVersion": "2.7",
+			  "autoUpgradeMinorVersion": true,
+			  "settings": {
+				"ExtensionAction": "Register",
+				"NodeConfigurationName": "[parameters('nodeConfigurationName')]",
+				"RefreshFrequencyMins": 30,
+				"ConfigurationMode": "applyAndAutoCorrect",
+				"ConfigurationModeFrequencyMins": 15,
+				"RegistrationUrl": "[parameters('registrationUrl')]"
+			  },
+			  "protectedSettings": {
+				"RegistrationKey": "[parameters('registrationKey')]"
+			  }
 			},
 			"copy": {
 				"name": "vmcopy",
