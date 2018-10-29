@@ -25,6 +25,9 @@
 		},
 		"nodeConfigurationName": {
 			"type": "string"
+		},
+		"logAnalyticsName": {
+			"type": "string"
 		}
 	},
 	"variables": {
@@ -142,7 +145,27 @@
 				"name": "vmcopy",
 				"count": "[parameters('vmCount')]"
 			}
-		}
+		},
+		{
+			"type": "Microsoft.Compute/virtualMachines/extensions",
+			"name": "[concat(variables('vmName'), copyIndex(),'/OMSExtension')]",
+			"apiVersion": "2018-06-01",
+			"location": "[resourceGroup().location]",
+			"dependsOn": [
+				"[concat('Microsoft.Compute/virtualMachines/', variables('vmName'), copyIndex())]"
+			  ],
+			"properties": {
+			  "publisher": "Microsoft.EnterpriseCloud.Monitoring",
+			  "type": "OmsAgentForLinux",
+			  "typeHandlerVersion": "1.7",
+			  "settings": {
+				"workspaceId": "[reference(resourceId(resourceGroup().name, 'Microsoft.OperationalInsights/workspaces/', parameters('logAnalyticsName')), '2015-11-01-preview').customerId]"
+			  },
+			  "protectedSettings": {
+				"workspaceKey": "[listKeys(resourceId(resourceGroup().name, 'Microsoft.OperationalInsights/workspaces/', parameters('logAnalyticsName')), '2015-11-01-preview').primarySharedKey]"
+			  }
+			}
+		  }
 	],
 	"outputs": {
 		"vmNamePrefix":{
