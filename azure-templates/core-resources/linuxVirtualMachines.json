@@ -109,31 +109,6 @@
 				"name": "vmcopy",
 				"count": "[parameters('vmCount')]"
 			}
-		},
-		{
-			"apiVersion": "2015-06-15",
-			"type": "Microsoft.Compute/virtualMachines/extensions",
-			"name": "[concat(variables('vmName'), copyIndex(),'/enabledsc')]",
-			"location": "[resourceGroup().location]",
-			"dependsOn": [
-			  "[concat('Microsoft.Compute/virtualMachines/', variables('vmName'), copyIndex())]"
-			],
-			"properties": {
-			  "publisher": "Microsoft.OSTCExtensions",
-			  "type": "DSCForLinux",
-			  "typeHandlerVersion": "2.4",
-			  "settings": {
-				"Mode": "Push"
-			  },
-			  "protectedSettings": {
-				"RegistrationUrl": "[parameters('registrationUrl')]",
-				"RegistrationKey": "[parameters('registrationKey')]"
-			  }
-			},
-			"copy": {
-				"name": "vmcopy",
-				"count": "[parameters('vmCount')]"
-			}
 		}
 	],
 	"outputs": {
