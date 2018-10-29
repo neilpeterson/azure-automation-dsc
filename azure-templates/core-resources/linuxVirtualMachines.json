@@ -34,7 +34,7 @@
 		"nicName": "virtual-nic-",
 		"publicIPAddressName": "public-ip-",
 		"vmName": "linux-vm-",
-		"ubuntuVersion": "16.04.0-LTS",
+		"windowsOSVersion": "16.04.0-LTS",
 		"subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), parameters('subnetName'))]",
 		"dscExtensionModulesUrl": "https://github.com/Azure/azure-quickstart-templates/raw/master/dsc-extension-azure-automation-pullserver/UpdateLCMforAAPull.zip",
 		"dscExtensionConfigurationFunction": "UpdateLCMforAAPull.ps1\\ConfigureLCMforAAPull"
@@ -100,7 +100,7 @@
 					"imageReference": {
 						"publisher": "Canonical",
 						"offer": "UbuntuServer",
-						"sku": "[variables('ubuntuVersion')]",
+						"sku": "[variables('windowsOSVersion')]",
 						"version": "latest"
 					},
 					"osDisk": {
@@ -117,33 +117,7 @@
 				"name": "vmcopy",
 				"count": "[parameters('vmCount')]"
 			}
-		},
-		{
-            "type": "Microsoft.Compute/virtualMachines/extensions",
-            "apiVersion": "2017-03-30",
-			"name": "[concat(variables('vmName'), copyIndex(), '/Microsoft.Monitoring')]",
-			"location": "[resourceGroup().location]",
-			"dependsOn": [
-				"[concat('Microsoft.Compute/virtualMachines/', variables('vmName'), copyIndex())]"
-			],
-            "properties": {
-                "publisher": "Microsoft.EnterpriseCloud.Monitoring",
-                "type": "MicrosoftMonitoringAgent",
-                "typeHandlerVersion": "1.0",
-                "autoUpgradeMinorVersion": true,
-                "settings": {
-                    "workspaceId": "[reference(resourceId(resourceGroup().name, 'Microsoft.OperationalInsights/workspaces/', parameters('logAnalyticsName')), '2015-11-01-preview').customerId]",
-					"azureResourceId": "[resourceId('Microsoft.Compute/virtualMachines/', concat(variables('vmName'), copyIndex()))]"
-                },
-                "protectedSettings": {
-                    "workspaceKey": "[listKeys(resourceId(resourceGroup().name, 'Microsoft.OperationalInsights/workspaces/', parameters('logAnalyticsName')), '2015-11-01-preview').primarySharedKey]"
-                }
-			},
-			"copy": {
-				"name": "dsccopy",
-				"count": "[parameters('vmCount')]"
-			}
-        }
+		}
 	],
 	"outputs": {
 		"vmNamePrefix":{
