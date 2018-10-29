@@ -37,7 +37,7 @@
 		},
 		"virtualNetworkName":{
 			"type": "string",
-			"value": "[variables('subnetName')]"
+			"value": "[variables('virtualNetworkName')]"
 		}
 	}
 }
