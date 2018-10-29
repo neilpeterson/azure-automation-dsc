@@ -206,6 +206,12 @@
 					},
 					"virtualNetworkName": {
 						"value": "[reference('VirtualNetwork').outputs.virtualNetworkName.value]"
+					},
+					"registrationKey": {
+						"value": "[reference('automationAnalytics').outputs.registrationKey.value]"
+					},
+					"registrationUrl": {
+						"value": "[reference('automationAnalytics').outputs.registrationUrl.value]"
 					}
 				}
 			}
