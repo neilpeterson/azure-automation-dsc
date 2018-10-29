@@ -26,7 +26,8 @@
 		"linkAccountsURI": "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/master/azure-templates/automation-monitoring/linkedWorkspaceAccount.json",
 		"azureMonitorAlert": "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/master/azure-templates/automation-monitoring/monitorAlert.json",
 		"azureMonitorActionGroupURI": "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/master/azure-templates/automation-monitoring/monitorActionGroup.json",
-		"networkURI": "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/master/azure-templates/core-resources/virtualNetwork.json"
+		"networkURI": "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/master/azure-templates/core-resources/virtualNetwork.json",
+		"storageURI": "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/master/azure-templates/core-resources/storageAccount.json"
 	},
 	"resources": [
 		{
@@ -261,6 +262,19 @@
 					"actionGroupId": {
 						"value": "[reference('AzureMonitorActionGroup').outputs.actionGroupId.value]"
 					}
+				}
+			}
+		},
+		{
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-05-01",
+			"name": "storageAccount",
+			"dependsOn": [],
+			"properties": {
+				"mode": "Incremental",
+				"templateLink": {
+					"uri": "[variables('storageURI')]",
+					"contentVersion": "1.0.0.0"
 				}
 			}
 		}
