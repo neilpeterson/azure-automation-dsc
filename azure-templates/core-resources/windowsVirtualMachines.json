@@ -31,7 +31,7 @@
 		}
 	},
 	"variables": {
-		"nicName": "virtual-nic-",
+		"nicName": "virtual-nic-windows-",
 		"publicIPAddressName": "public-ip-",
 		"vmName": "win-vm-",
 		"windowsOSVersion": "2016-Datacenter",

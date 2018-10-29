@@ -174,7 +174,6 @@
 					"virtualNetworkName": {
 						"value": "[reference('VirtualNetwork').outputs.virtualNetworkName.value]"
 					}
-
 				}
 			}
 		},
@@ -213,6 +212,12 @@
 					},
 					"logAnalyticsName": {
 						"value": "[reference('automationAnalytics').outputs.automationAccountName.value]"
+					},
+					"subnetName": {
+						"value": "[reference('VirtualNetwork').outputs.subnetName.value]"
+					},
+					"virtualNetworkName": {
+						"value": "[reference('VirtualNetwork').outputs.virtualNetworkName.value]"
 					}
 				}
 			}

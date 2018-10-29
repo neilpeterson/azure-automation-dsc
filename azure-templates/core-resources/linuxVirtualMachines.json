@@ -11,18 +11,6 @@
 		"vmCount": {
 			"type": "int"
 		},
-		"registrationKey": {
-			"type": "string"
-		},
-		"registrationUrl": {
-			"type": "string"
-		},
-		"nodeConfigurationName": {
-			"type": "string"
-		},
-		"logAnalyticsName": {
-			"type": "string"
-		},
 		"subnetName": {
 			"type": "string"
 		},
@@ -31,13 +19,11 @@
 		}
 	},
 	"variables": {
-		"nicName": "virtual-nic-",
+		"nicName": "virtual-nic-linux-",
 		"publicIPAddressName": "public-ip-",
 		"vmName": "linux-vm-",
 		"windowsOSVersion": "16.04.0-LTS",
 		"subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), parameters('subnetName'))]",
-		"dscExtensionModulesUrl": "https://github.com/Azure/azure-quickstart-templates/raw/master/dsc-extension-azure-automation-pullserver/UpdateLCMforAAPull.zip",
-		"dscExtensionConfigurationFunction": "UpdateLCMforAAPull.ps1\\ConfigureLCMforAAPull"
 	},
 	"resources": [{
 			"apiVersion": "2016-03-30",
