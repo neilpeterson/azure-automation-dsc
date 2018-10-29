@@ -183,7 +183,9 @@
 			"apiVersion": "2018-05-01",
 			"name": "linuxVirtualMachine",
 			"type": "Microsoft.Resources/deployments",
-			"dependsOn": ["Microsoft.Resources/deployments/automationAnalytics"],
+			"dependsOn": [
+				"Microsoft.Resources/deployments/automationAnalytics"
+			],
 			"properties": {
 				"mode": "Incremental",
 				"templateLink": {
