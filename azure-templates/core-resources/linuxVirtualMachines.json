@@ -20,7 +20,7 @@
 	},
 	"variables": {
 		"nicName": "virtual-nic-linux-",
-		"publicIPAddressName": "public-ip-",
+		"publicIPAddressName": "public-ip-linux-",
 		"vmName": "linux-vm-",
 		"windowsOSVersion": "16.04.0-LTS",
 		"subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), parameters('subnetName'))]",

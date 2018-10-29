@@ -32,7 +32,7 @@
 	},
 	"variables": {
 		"nicName": "virtual-nic-windows-",
-		"publicIPAddressName": "public-ip-",
+		"publicIPAddressName": "public-ip-windows-",
 		"vmName": "win-vm-",
 		"windowsOSVersion": "2016-Datacenter",
 		"subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), parameters('subnetName'))]",
