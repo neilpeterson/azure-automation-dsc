@@ -4,7 +4,7 @@
     "parameters": {
     },
     "variables": {
-      "storageAccountName": "[concat(uniquestring(resourceGroup().id), '-changedfiles')]",
+      "storageAccountName": "[concat(uniquestring(resourceGroup().id), 'files')]",
       "storageAccountType": "Standard_LRS"
     },
     "resources": [
