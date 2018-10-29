@@ -20,12 +20,13 @@
 	},
 	"variables": {
 		"automationAnalyticsURI": "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/master/azure-templates/automation-monitoring/automationAnalytics.json",
+		"solutionsURI": "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/master/azure-templates/automation-monitoring/automationSolutions.json",
 		"windowsVirtualMachineURI": "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/master/azure-templates/core-resources/windowsVirtualMachines.json",
 		"linuxVirtualMachineURI": "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/master/azure-templates/core-resources/linuxVirtualMachines.json",
-		"solutionsURI": "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/master/azure-templates/automation-monitoring/automationSolutions.json",
 		"linkAccountsURI": "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/master/azure-templates/automation-monitoring/linkedWorkspaceAccount.json",
 		"azureMonitorAlert": "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/master/azure-templates/automation-monitoring/monitorAlert.json",
-		"azureMonitorActionGroupURI": "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/master/azure-templates/automation-monitoring/monitorActionGroup.json"
+		"azureMonitorActionGroupURI": "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/master/azure-templates/automation-monitoring/monitorActionGroup.json",
+		"networkURI": "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/master/azure-templates/core-resources/virtualNetwork.json"
 	},
 	"resources": [
 		{
@@ -123,7 +124,7 @@
 			"properties": {
 				"mode": "Incremental",
 				"templateLink": {
-					"uri": "[variables('solutionsURI')]",
+					"uri": "[variables('networkURI')]",
 					"contentVersion": "1.0.0.0"
 				},
 				"parameters": {
@@ -131,7 +132,7 @@
 			}
 		},
 		{
-			"condition": "[greaterOrEquals(parameters('WindowsVMCount'), '1')]",
+			"condition": "[greaterOrEquals(parameters('WindowsVMCount'), 1)]",
 			"apiVersion": "2018-05-01",
 			"name": "windowsVirtualMachine",
 			"type": "Microsoft.Resources/deployments",
@@ -171,7 +172,7 @@
 			}
 		},
 		{
-			"condition": "[greaterOrEquals(parameters('LinuxVMCount'), '1')]",
+			"condition": "[greaterOrEquals(parameters('LinuxVMCount'), 1)]",
 			"apiVersion": "2018-05-01",
 			"name": "linuxVirtualMachine",
 			"type": "Microsoft.Resources/deployments",
@@ -230,7 +231,8 @@
 			"apiVersion": "2018-05-01",
 			"name": "AzureMonitorAlert",
 			"dependsOn": [
-				"[concat('Microsoft.Resources/deployments/', 'virtualMachine')]"
+				"[concat('Microsoft.Resources/deployments/', 'windowsVirtualMachine')]",
+				"[concat('Microsoft.Resources/deployments/', 'linuxVirtualMachine')]"
 			],
 			"properties": {
 				"mode": "Incremental",

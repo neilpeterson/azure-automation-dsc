@@ -22,18 +22,20 @@
 		},
 		"logAnalyticsName": {
 			"type": "string"
+		},
+		"subnetName": {
+			"type": "string"
+		},
+		"virtualNetworkName": {
+			"type": "string"
 		}
 	},
 	"variables": {
 		"nicName": "virtual-nic-",
-		"addressPrefix": "10.0.0.0/16",
-		"subnetName": "subnet",
-		"subnetPrefix": "10.0.0.0/24",
 		"publicIPAddressName": "public-ip-",
 		"vmName": "win-vm-",
-		"virtualNetworkName": "virtial-network",
 		"windowsOSVersion": "2016-Datacenter",
-		"subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('subnetName'))]",
+		"subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), parameters('subnetName'))]",
 		"dscExtensionModulesUrl": "https://github.com/Azure/azure-quickstart-templates/raw/master/dsc-extension-azure-automation-pullserver/UpdateLCMforAAPull.zip",
 		"dscExtensionConfigurationFunction": "UpdateLCMforAAPull.ps1\\ConfigureLCMforAAPull"
 	},
@@ -52,31 +54,11 @@
 		},
 		{
 			"apiVersion": "2016-03-30",
-			"type": "Microsoft.Network/virtualNetworks",
-			"name": "[variables('virtualNetworkName')]",
-			"location": "[resourceGroup().location]",
-			"properties": {
-				"addressSpace": {
-					"addressPrefixes": [
-						"[variables('addressPrefix')]"
-					]
-				},
-				"subnets": [{
-					"name": "[variables('subnetName')]",
-					"properties": {
-						"addressPrefix": "[variables('subnetPrefix')]"
-					}
-				}]
-			}
-		},
-		{
-			"apiVersion": "2016-03-30",
 			"type": "Microsoft.Network/networkInterfaces",
 			"name": "[concat(variables('nicName'), copyIndex())]",
 			"location": "[resourceGroup().location]",
 			"dependsOn": [
-				"[resourceId('Microsoft.Network/publicIPAddresses/', concat(variables('publicIPAddressName'), copyIndex()))]",
-				"[resourceId('Microsoft.Network/virtualNetworks/', variables('virtualNetworkName'))]"
+				"[resourceId('Microsoft.Network/publicIPAddresses/', concat(variables('publicIPAddressName'), copyIndex()))]"
 			],
 			"properties": {
 				"ipConfigurations": [{

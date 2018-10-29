@@ -22,28 +22,43 @@
 		},
 		"logAnalyticsName": {
 			"type": "string"
+		},
+		"subnetName": {
+			"type": "string"
+		},
+		"virtualNetworkName": {
+			"type": "string"
 		}
 	},
 	"variables": {
 		"nicName": "virtual-nic-",
-		"subnetName": "subnet",
 		"publicIPAddressName": "public-ip-",
 		"vmName": "win-vm-",
-		"virtualNetworkName": "virtial-network",
 		"windowsOSVersion": "2016-Datacenter",
-		"subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('subnetName'))]",
+		"subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), parameters('subnetName'))]",
 		"dscExtensionModulesUrl": "https://github.com/Azure/azure-quickstart-templates/raw/master/dsc-extension-azure-automation-pullserver/UpdateLCMforAAPull.zip",
 		"dscExtensionConfigurationFunction": "UpdateLCMforAAPull.ps1\\ConfigureLCMforAAPull"
 	},
-	"resources": [
+	"resources": [{
+			"apiVersion": "2016-03-30",
+			"type": "Microsoft.Network/publicIPAddresses",
+			"name": "[concat(variables('publicIPAddressName'), copyIndex())]",
+			"location": "[resourceGroup().location]",
+			"properties": {
+				"publicIPAllocationMethod": "Dynamic"
+			},
+			"copy": {
+				"name": "pipcopy",
+				"count": "[parameters('vmCount')]"
+			}
+		},
 		{
 			"apiVersion": "2016-03-30",
 			"type": "Microsoft.Network/networkInterfaces",
 			"name": "[concat(variables('nicName'), copyIndex())]",
 			"location": "[resourceGroup().location]",
 			"dependsOn": [
-				"[resourceId('Microsoft.Network/publicIPAddresses/', concat(variables('publicIPAddressName'), copyIndex()))]",
-				"[resourceId('Microsoft.Network/virtualNetworks/', variables('virtualNetworkName'))]"
+				"[resourceId('Microsoft.Network/publicIPAddresses/', concat(variables('publicIPAddressName'), copyIndex()))]"
 			],
 			"properties": {
 				"ipConfigurations": [{
