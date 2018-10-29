@@ -9,7 +9,6 @@
 
  configuration linuxpackage {
 
-    Import-DscResource -ModuleName PsDesiredStateConfiguration
     Import-DSCResource -Module nx
 
     Node "localhost" {
@@ -17,7 +16,6 @@
         nxPackage httpd {
             Name = "nginx"
             Ensure = "Present"
-            PackageManager = "apt"
         }
     }
 }
