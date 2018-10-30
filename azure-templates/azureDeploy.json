@@ -12,11 +12,11 @@
 		},
 		"WindowsVMCount": {
 			"type": "int",
-			"defaultValue": "1"
+			"defaultValue": 1
 		},
 		"LinuxVMCount": {
 			"type": "int",
-			"defaultValue": "1"
+			"defaultValue": 1
 		},
 		"email": {
 			"type": "string"
