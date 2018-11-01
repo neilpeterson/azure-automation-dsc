@@ -115,19 +115,6 @@
 							"name": "[variables('linuxConfigurationName')]"
 						}
 					}
-				},
-				{
-					"name": "TeamsWebhook",
-					"type": "variables",
-					"apiVersion": "2015-10-31",
-					"dependsOn": [
-						"[resourceId('Microsoft.Automation/automationAccounts/', variables('automationAccountName'))]"
-					],
-					"tags": {},
-					"properties": {
-						"description": "MS Teams Webhook Address",
-						"Value": "[parameters('TeamsWebHook')]"
-					}
 				}
 			]
 		},
