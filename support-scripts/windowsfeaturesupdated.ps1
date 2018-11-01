@@ -11,7 +11,7 @@
 
     Import-DscResource -ModuleName PsDesiredStateConfiguration
 
-    node $localhost {
+    node localhost {
 
         WindowsFeature WebServer {
             Ensure = "Present"

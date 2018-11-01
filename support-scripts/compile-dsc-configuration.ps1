@@ -9,9 +9,9 @@
  #>
 
  $params = @{
-    SourcePath = "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/master/support-scripts/windows-config-updated.ps1";
+    ConfigurationName = "windowsfeaturesupdated";
     ResourceGroupName = "IgniteTourDemo";
-    AutomationAccountName = "IgniteTourDemo"
+    AutomationAccountName = "vc7yddstm66b6"
 }
 
-Import-AzAutomationDscConfiguration @params -Published
+Start-AzAutomationDscCompilationJob @params

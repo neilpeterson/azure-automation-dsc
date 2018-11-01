@@ -8,10 +8,10 @@
     Intent: Sample to import DSC configuration.
  #>
 
-$params = @{
-    SourcePath = "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/master/support-scripts/windows-config-updated.ps1";
+$import = @{
+    SourcePath = "windowsfeaturesupdated.ps1";
     ResourceGroupName = "IgniteTourDemo";
-    AutomationAccountName = "IgniteTourDemo"
+    AutomationAccountName = "vc7yddstm66b6"
 }
 
-Import-AzAutomationDscConfiguration @params -Published
+Import-AzAutomationDscConfiguration @import -Published
