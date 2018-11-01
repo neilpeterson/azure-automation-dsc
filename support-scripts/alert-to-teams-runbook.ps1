@@ -12,22 +12,27 @@
     [object] $WebhookData
 )
 
+# Gather data
 $RequestBody = $WebhookData.RequestBody | ConvertFrom-Json
-
-$Data = $RequestBody.data
-
-Write-Output $RequestBody
-Write-Output "-------"
-Write-Output $Data.name
-
-# # Teams Webhook URI
 $TeamsURI = Get-AutomationVariable -Name 'TeamsURI'
+$VMName = $RequestBody.data.SearchResult.tables.rows
 
-
-
-# Notify Team
+# Teams request body
 $Body = ConvertTo-Json @{
-    text = 'Azure Monitor Alert: ' + $Data.name
+    text = 'IIS Service has stopped: ' + $VMName
 }
 
+# Teams request
 Invoke-WebRequest -Uri $TeamsURI -Method Post -Body $Body -ContentType 'application/json' -UseBasicParsing
+
+# Get Azure VM
+$VMObject = get-azvm | where {$_.Name -eq $VMName}
+
+# Run script to start service
+$params = @{
+    VM = $VMObject;
+    ScriptPath = "w3svc-service.ps1";
+    CommandId = "RunPowerShellScript"
+}
+
+Invoke-AzVMRunCommand @params
