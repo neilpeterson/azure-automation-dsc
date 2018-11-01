@@ -126,7 +126,7 @@
 					"tags": {},
 					"properties": {
 						"description": "MS Teams Webhook Address",
-						"Value": "[parameters('TeamsWebHook')]"
+						"Value": "[concat('\"', parameters('TeamsWebHook'), '\"')]"
 					}
 				}
 			]
