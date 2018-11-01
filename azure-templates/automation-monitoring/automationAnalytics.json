@@ -17,7 +17,10 @@
 		"linuxNodeConfigurationName": "linuxpackage.localhost",
 		"automationAccountName": "[uniqueString(resourceGroup().id)]",
 		"moduleUri": "https://devopsgallerystorage.blob.core.windows.net/packages/nx.1.0.0.nupkg",
-		"teamsRunbook": "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/master/support-scripts/alert-to-teams-runbook.ps1"
+		"teamsRunbook": "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/master/support-scripts/alert-to-teams-runbook.ps1",
+		"variableName": "TeamsURI",
+		"runbookName": "W3SVCRemediation"
+
 	},
 	"resources": [{
 			"name": "[variables('automationAccountName')]",
@@ -118,7 +121,7 @@
 					}
 				},
 				{
-					"name": "TeamsWebhook",
+					"name": "[variables('variableName')]",
 					"type": "variables",
 					"apiVersion": "2015-10-31",
 					"dependsOn": [
@@ -133,7 +136,7 @@
 				{
 					"apiVersion": "2015-10-31",
 					"type": "runbooks",
-					"name": "test",
+					"name": "[variables('runbookName')]",
 					"location": "[resourceGroup().location]",
 					"dependsOn": [
 						"[resourceId('Microsoft.Automation/automationAccounts/', variables('automationAccountName'))]"
