@@ -9,14 +9,9 @@
 
  configuration windowsfeaturesupdated {
 
-    param
-    (
-        [string[]]$NodeName = 'localhost'
-    )
-
     Import-DscResource -ModuleName PsDesiredStateConfiguration
 
-    node $NodeName {
+    node localhost {
 
         WindowsFeature WebServer {
             Ensure = "Present"

@@ -13,7 +13,7 @@
 
     Node "localhost" {
 
-        nxPackage httpd {
+        nxPackage nginx {
             Name = "nginx"
             Ensure = "Present"
         }
