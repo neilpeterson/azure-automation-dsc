@@ -31,7 +31,7 @@ $VMObject = get-azvm | where {$_.Name -eq $VMName}
 # Run script to start service
 $params = @{
     VM = $VMObject;
-    ScriptPath = "w3svc-service.ps1";
+    ScriptPath = "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/master/support-scripts/w3svc-service.ps1";
     CommandId = "RunPowerShellScript"
 }
 
