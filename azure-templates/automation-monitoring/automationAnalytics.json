@@ -16,7 +16,8 @@
 		"nodeConfigurationName": "windowsfeatures.localhost",
 		"linuxNodeConfigurationName": "linuxpackage.localhost",
 		"automationAccountName": "[uniqueString(resourceGroup().id)]",
-		"moduleUri": "https://devopsgallerystorage.blob.core.windows.net/packages/nx.1.0.0.nupkg"
+		"moduleUri": "https://devopsgallerystorage.blob.core.windows.net/packages/nx.1.0.0.nupkg",
+		"teamsRunbook": "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/master/support-scripts/alert-to-teams-runbook.ps1"
 	},
 	"resources": [{
 			"name": "[variables('automationAccountName')]",
@@ -128,7 +129,24 @@
 						"description": "MS Teams Webhook Address",
 						"Value": "[concat('\"', parameters('TeamsWebHook'), '\"')]"
 					}
-				}
+				},
+				{
+					"apiVersion": "2015-10-31",
+					"type": "runbooks",
+					"name": "test",
+					"location": "[resourceGroup().location]",
+					"dependsOn": [
+						"[resourceId('Microsoft.Automation/automationAccounts/', variables('automationAccountName'))]"
+					],
+					"properties": {
+						"runbookType": "PowerShell",
+						"logProgress": false,
+						"logVerbose": true,
+						"publishContentLink": {
+							"uri": "[variables('teamsRunbook')]"
+						}
+					}
+				},
 			]
 		},
 		{
