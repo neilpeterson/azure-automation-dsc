@@ -35,7 +35,8 @@
 		"azureMonitorAlert": "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/master/azure-templates/automation-monitoring/monitorAlert.json",
 		"azureMonitorActionGroupURI": "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/master/azure-templates/automation-monitoring/monitorActionGroup.json",
 		"networkURI": "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/master/azure-templates/core-resources/virtualNetwork.json",
-		"storageURI": "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/master/azure-templates/core-resources/storageAccount.json"
+		"storageURI": "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/master/azure-templates/core-resources/storageAccount.json",
+		"dashboardURI": "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/master/azure-templates/azure-dashboard/dashboard.json"
 	},
 	"resources": [
 		{
@@ -285,6 +286,19 @@
 				"mode": "Incremental",
 				"templateLink": {
 					"uri": "[variables('storageURI')]",
+					"contentVersion": "1.0.0.0"
+				}
+			}
+		},
+		{
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-05-01",
+			"name": "dashboard",
+			"dependsOn": [],
+			"properties": {
+				"mode": "Incremental",
+				"templateLink": {
+					"uri": "[variables('dashboardURI')]",
 					"contentVersion": "1.0.0.0"
 				}
 			}
