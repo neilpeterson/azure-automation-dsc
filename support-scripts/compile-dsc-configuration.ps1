@@ -5,7 +5,7 @@
 
 .NOTES
     Author: Neil Peterson
-    Intent: Sample to demonstrate DSC complication.
+    Intent: Sample to demonstrate DSC compilation.
  #>
 
  $params = @{
