@@ -30,7 +30,8 @@
 		"teamsVariableName": "TeamsURI",
 		"tenantVariableName": "TenantID",
 		"runbookName": "W3SVCRemediation",
-		"credentialName": "AzureRM"
+		"credentialName": "AzureRM",
+		"resourceGroupName": "resourceGroup().name"
 
 	},
 	"resources": [{
@@ -154,22 +155,9 @@
 					"tags": {},
 					"properties": {
 						"description": "MS Teams Webhook Address",
-						"Value": "[concat('\"', parameters('TeamsWebHook'), '\"')]"
+						"Value": "[concat('\"', parameters('TenantID'), '\"')]"
 					}
-				},
-				{
-					"name": "Location",
-					"type": "variables",
-					"apiVersion": "2015-10-31",
-					"dependsOn": [
-						"[resourceId('Microsoft.Automation/automationAccounts/', variables('automationAccountName'))]"
-					],
-					"tags": {},
-					"properties": {
-						"description": "VM Resource Group Location",
-						"Value": "[concat('\"', resourceGroup().location, '\"')]"
-					}
-				},
+				}
 				{
 					"name": "ResourceGroupName",
 					"type": "variables",
@@ -180,7 +168,7 @@
 					"tags": {},
 					"properties": {
 						"description": "VM Resource Group Location",
-						"Value": "[concat('\"', resourceGroup().name, '\"')]"
+						"Value": "[concat('\"', variables('resourceGroupName'), '\"')]"
 					}
 				},
 				{
