@@ -4,15 +4,6 @@
 	"parameters": {
 		"TeamsWebHook": {
 			"type": "string"
-		},
-		"TenantID": {
-			"type": "securestring"
-		},
-		"ClientID": {
-			"type": "securestring"
-		},
-		"Secret": {
-			"type": "securestring"
 		}
 	},
 	"variables": {
@@ -156,7 +147,7 @@
 					"tags": {},
 					"properties": {
 						"description": "MS Teams Webhook Address",
-						"Value": "[concat('\"', parameters('TenantID'), '\"')]"
+						"Value": "[concat('\"', 'replace', '\"')]"
 					}
 				},
 				{
@@ -210,8 +201,8 @@
 						"[resourceId('Microsoft.Automation/automationAccounts/', variables('automationAccountName'))]"
 					],
 					"properties": {
-						"userName": "[string(parameters('ClientID'))]",
-						"password": "[string(parameters('Secret'))]"
+						"userName": "replace",
+						"password": "replace"
 					}
 				}
 			]
