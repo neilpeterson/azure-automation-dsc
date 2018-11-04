@@ -31,7 +31,8 @@
 		"tenantVariableName": "TenantID",
 		"runbookName": "W3SVCRemediation",
 		"credentialName": "AzureRM",
-		"resourceGroupName": "resourceGroup().name"
+		"resourceGroupName": "[resourceGroup().name]",
+		"location": "[resourceGroup().location]"
 
 	},
 	"resources": [{
@@ -172,6 +173,19 @@
 					}
 				},
 				{
+					"name": "Location",
+					"type": "variables",
+					"apiVersion": "2015-10-31",
+					"dependsOn": [
+						"[resourceId('Microsoft.Automation/automationAccounts/', variables('automationAccountName'))]"
+					],
+					"tags": {},
+					"properties": {
+						"description": "VM Resource Group Location",
+						"Value": "[concat('\"', variables('location'), '\"')]"
+					}
+				},
+				{
 					"apiVersion": "2015-10-31",
 					"type": "runbooks",
 					"name": "[variables('runbookName')]",
@@ -192,11 +206,14 @@
 					"name": "[variables('credentialName')]",
 					"type": "credentials",
 					"apiVersion": "2015-10-31",
+					"dependsOn": [
+						"[resourceId('Microsoft.Automation/automationAccounts/', variables('automationAccountName'))]"
+					],
 					"properties": {
-					  "userName":  "[parameters('ClientID')]",
-					  "password": "[parameters('Secret')]"
+						"userName": "[parameters('ClientID')]",
+						"password": "[parameters('Secret')]"
 					}
-				  }
+				}
 			]
 		},
 		{
