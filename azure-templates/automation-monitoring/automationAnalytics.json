@@ -210,8 +210,8 @@
 						"[resourceId('Microsoft.Automation/automationAccounts/', variables('automationAccountName'))]"
 					],
 					"properties": {
-						"userName": "[string([parameters('ClientID')])]",
-						"password": "[string([parameters('Secret')])]"
+						"userName": "[string(parameters('ClientID'))]",
+						"password": "[string(parameters('Secret'))]"
 					}
 				}
 			]
