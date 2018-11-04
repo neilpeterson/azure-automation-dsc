@@ -167,7 +167,7 @@
 					"tags": {},
 					"properties": {
 						"description": "VM Resource Group Location",
-						"Value": "[concat('\"', [resourceGroup().location], '\"')]"
+						"Value": "[concat('\"', resourceGroup().location, '\"')]"
 					}
 				},
 				{
@@ -180,7 +180,7 @@
 					"tags": {},
 					"properties": {
 						"description": "VM Resource Group Location",
-						"Value": "[concat('\"', [resourceGroup().name], '\"')]"
+						"Value": "[concat('\"', resourceGroup().name, '\"')]"
 					}
 				},
 				{
