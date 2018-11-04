@@ -12,10 +12,19 @@
     [object] $WebhookData
 )
 
-# Gather data
+# Parse Data
 $RequestBody = $WebhookData.RequestBody | ConvertFrom-Json
-$TeamsURI = Get-AutomationVariable -Name 'TeamsURI'
 $VMName = $RequestBody.data.SearchResult.tables.rows
+
+# Get Automation Assets
+$TeamsURI = Get-AutomationVariable -Name 'TeamsURI'
+$TenantID = Get-AutomationVariable -Name 'TenantID'
+$Creds = Get-AutomationPSCredential -Name 'AzureRM'
+$ResourceGroupName = Get-AutomationPSCredential -Name 'ResourceGroupName'
+$Location = Get-AutomationPSCredential -Name 'Location'
+
+# Login Azure
+Login-AzureRMAccount -ServicePrincipal -Credential $Creds -TenantId $TenantID
 
 # Teams request body
 $Body = ConvertTo-Json @{
@@ -26,13 +35,16 @@ $Body = ConvertTo-Json @{
 Invoke-WebRequest -Uri $TeamsURI -Method Post -Body $Body -ContentType 'application/json' -UseBasicParsing
 
 # Get Azure VM
-$VMObject = get-azvm | where {$_.Name -eq $VMName}
+$VMObject = Get-AzureRmVM | where {$_.Name -eq $VMName}
 
 # Run script to start service
 $params = @{
-    VM = $VMObject;
-    ScriptPath = "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/master/support-scripts/w3svc-service.ps1";
-    CommandId = "RunPowerShellScript"
+    ResourceGroupName = $ResourceGroupName;
+    Location = $Location;
+    Name = "startIIS";
+    VM = $VMObject.Name;
+    FileUri = "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/master/support-scripts/w3svc-service.ps1";
+    Run = "w3svc-service.ps1"
 }
 
-Invoke-AzVMRunCommand @params
+Set-AzureRmVMCustomScriptExtension @params

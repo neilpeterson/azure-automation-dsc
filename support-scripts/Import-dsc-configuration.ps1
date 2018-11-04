@@ -10,8 +10,8 @@
 
 $import = @{
     SourcePath = "windowsfeaturesupdated.ps1";
-    ResourceGroupName = "IgniteTourDemo";
-    AutomationAccountName = "vc7yddstm66b6"
+    ResourceGroupName = "IgniteTourDemoVideos";
+    AutomationAccountName = "o27mrdfgxybzw"
 }
 
 Import-AzAutomationDscConfiguration @import -Published

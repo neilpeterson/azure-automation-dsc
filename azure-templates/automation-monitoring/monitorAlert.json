@@ -14,7 +14,7 @@
         }
     },
     "variables": {
-        "alertName": "template-test",
+        "alertName": "cpu-alert",
         "alertDescription": "Genereated .via template.",
         "alertSeverity": 3,
         "isEnabled": true,
@@ -22,7 +22,7 @@
         "targetResourceRegion": "westeurope",
         "metricName": "Percentage CPU",
         "operator": "GreaterThan",
-        "threshold": "48",
+        "threshold": "65",
         "timeAggregation": "Average",
         "windowSize": "PT5M",
         "evaluationFrequency": "PT1M"

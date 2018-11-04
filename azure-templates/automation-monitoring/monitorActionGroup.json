@@ -10,7 +10,7 @@
 		}
     },
     "variables": {
-      "actionGroupName": "email"
+      "actionGroupName": "cpu-email"
     },
     "resources": [
       {

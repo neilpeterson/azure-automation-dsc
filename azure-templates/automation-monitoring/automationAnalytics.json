@@ -4,6 +4,15 @@
 	"parameters": {
 		"TeamsWebHook": {
 			"type": "string"
+		},
+		"TenantID": {
+			"type": "string"
+		},
+		"ClientID": {
+			"type": "string"
+		},
+		"Secret": {
+			"type": "string"
 		}
 	},
 	"variables": {
@@ -18,8 +27,10 @@
 		"automationAccountName": "[uniqueString(resourceGroup().id)]",
 		"moduleUri": "https://devopsgallerystorage.blob.core.windows.net/packages/nx.1.0.0.nupkg",
 		"teamsRunbook": "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/master/support-scripts/alert-to-teams-runbook.ps1",
-		"variableName": "TeamsURI",
-		"runbookName": "W3SVCRemediation"
+		"teamsVariableName": "TeamsURI",
+		"tenantVariableName": "TenantID",
+		"runbookName": "W3SVCRemediation",
+		"credentialName": "AzureRM"
 
 	},
 	"resources": [{
@@ -121,7 +132,7 @@
 					}
 				},
 				{
-					"name": "[variables('variableName')]",
+					"name": "[variables('teamsVariableName')]",
 					"type": "variables",
 					"apiVersion": "2015-10-31",
 					"dependsOn": [
@@ -131,6 +142,45 @@
 					"properties": {
 						"description": "MS Teams Webhook Address",
 						"Value": "[concat('\"', parameters('TeamsWebHook'), '\"')]"
+					}
+				},
+				{
+					"name": "[variables('tenantVariableName')]",
+					"type": "variables",
+					"apiVersion": "2015-10-31",
+					"dependsOn": [
+						"[resourceId('Microsoft.Automation/automationAccounts/', variables('automationAccountName'))]"
+					],
+					"tags": {},
+					"properties": {
+						"description": "MS Teams Webhook Address",
+						"Value": "[concat('\"', parameters('TeamsWebHook'), '\"')]"
+					}
+				},
+				{
+					"name": "Location",
+					"type": "variables",
+					"apiVersion": "2015-10-31",
+					"dependsOn": [
+						"[resourceId('Microsoft.Automation/automationAccounts/', variables('automationAccountName'))]"
+					],
+					"tags": {},
+					"properties": {
+						"description": "VM Resource Group Location",
+						"Value": "[concat('\"', [resourceGroup().location], '\"')]"
+					}
+				},
+				{
+					"name": "ResourceGroupName",
+					"type": "variables",
+					"apiVersion": "2015-10-31",
+					"dependsOn": [
+						"[resourceId('Microsoft.Automation/automationAccounts/', variables('automationAccountName'))]"
+					],
+					"tags": {},
+					"properties": {
+						"description": "VM Resource Group Location",
+						"Value": "[concat('\"', [resourceGroup().name], '\"')]"
 					}
 				},
 				{
@@ -150,6 +200,15 @@
 						}
 					}
 				},
+				{
+					"name": "[variables('credentialName')]",
+					"type": "credentials",
+					"apiVersion": "2015-10-31",
+					"properties": {
+					  "userName":  "[parameters('ClientID')]",
+					  "password": "[parameters('Secret')]"
+					}
+				  }
 			]
 		},
 		{
