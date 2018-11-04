@@ -157,7 +157,7 @@
 						"description": "MS Teams Webhook Address",
 						"Value": "[concat('\"', parameters('TenantID'), '\"')]"
 					}
-				}
+				},
 				{
 					"name": "ResourceGroupName",
 					"type": "variables",
