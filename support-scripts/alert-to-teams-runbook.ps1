@@ -20,8 +20,8 @@ $VMName = $RequestBody.data.SearchResult.tables.rows
 $TeamsURI = Get-AutomationVariable -Name 'TeamsURI'
 $TenantID = Get-AutomationVariable -Name 'TenantID'
 $Creds = Get-AutomationPSCredential -Name 'AzureRM'
-$ResourceGroupName = Get-AutomationPSCredential -Name 'ResourceGroupName'
-$Location = Get-AutomationPSCredential -Name 'Location'
+$ResourceGroupName = Get-AutomationVariable -Name 'ResourceGroupName'
+$Location = Get-AutomationVariable -Name 'Location'
 
 # Login Azure
 Login-AzureRMAccount -ServicePrincipal -Credential $Creds -TenantId $TenantID
@@ -39,9 +39,9 @@ $VMObject = Get-AzureRmVM | where {$_.Name -eq $VMName}
 
 # Run script to start service
 $params = @{
-    ResourceGroupName = $ResourceGroupName;
-    Location = $Location;
     Name = "startIIS";
+    ResourceGroupName = $ResourceGroupName;
+    Location = $Location
     VM = $VMObject.Name;
     FileUri = "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/master/support-scripts/w3svc-service.ps1";
     Run = "w3svc-service.ps1"
