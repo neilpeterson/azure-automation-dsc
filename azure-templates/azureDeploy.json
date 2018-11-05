@@ -4,26 +4,44 @@
 	"parameters": {
 		"adminUsername": {
 			"type": "string",
-			"defaultValue": "azureuser"
+			"defaultValue": "azureuser",
+			"metadata": {
+				"description": "Admin user name for the virtual machines."
+			}
 		},
 		"adminPassword": {
 			"type": "securestring",
-			"defaultValue": "Password12"
+			"defaultValue": "Password12",
+			"metadata": {
+				"description": "Admin password name for the virtual machines."
+			}
 		},
 		"WindowsVMCount": {
 			"type": "int",
-			"defaultValue": 1
+			"defaultValue": 1,
+			"metadata": {
+				"description": "The number of Windows VMs to create."
+			}
 		},
 		"LinuxVMCount": {
 			"type": "int",
-			"defaultValue": 1
+			"defaultValue": 1,
+			"metadata": {
+				"description": "The number of Linux VMs to create."
+			}
 		},
 		"email": {
-			"type": "string"
+			"type": "string",
+			"metadata": {
+				"description": "The email address configured with the Azure Monitor alert."
+			}
 		},
 		"teamsWebHook": {
 			"type": "string",
-			"defaultValue": "https://outlook.office.com/webhook/3b51bf6b-dc4c-46ca-944d-4c3e493fb4dc@72f988bf-86f1-41af-91ab-2d7cd011db47/IncomingWebhook/c05e36295f334b9db0ee9c2d69e8a65d/b0959e18-c917-49ec-9a03-b91957a24836"
+			"defaultValue": "https://outlook.office.com/webhook/3b51bf6b-dc4c-46ca-944d-4c3e493fb4dc@72f988bf-86f1-41af-91ab-2d7cd011db47/IncomingWebhook/c05e36295f334b9db0ee9c2d69e8a65d/b0959e18-c917-49ec-9a03-b91957a24836",
+			"metadata": {
+				"description": "Webhook to Teams Channel."
+			}
 		}
 	},
 	"variables": {
