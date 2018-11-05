@@ -141,6 +141,7 @@
 					"name": "[variables('tenantVariableName')]",
 					"type": "variables",
 					"apiVersion": "2015-10-31",
+					"isEncrypted": true,
 					"dependsOn": [
 						"[resourceId('Microsoft.Automation/automationAccounts/', variables('automationAccountName'))]"
 					],
