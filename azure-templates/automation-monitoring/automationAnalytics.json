@@ -4,10 +4,12 @@
 	"parameters": {
 		"TeamsWebHook": {
 			"type": "string"
+		},
+		"insights-sku": {
+			"type": "string"
 		}
 	},
 	"variables": {
-		"insights-sku": "standard",
 		"linuxConfigurationName": "linuxpackage",
 		"configurationName": "windowsfeatures",
 		"configurationDescription": "A configuration for installing IIS.",
@@ -34,7 +36,7 @@
 			"comments": "Automation account for OMS",
 			"properties": {
 				"sku": {
-					"name": "pergb2018"
+					"name": "Basic"
 				}
 			},
 			"resources": [{
@@ -215,7 +217,7 @@
 			"location": "[resourceGroup().location]",
 			"properties": {
 				"sku": {
-					"name": "[variables('insights-sku')]"
+					"name": "[parameters('insights-sku')]"
 				},
 				"features": {
 					"searchVersion": 1

@@ -42,6 +42,14 @@
 			"metadata": {
 				"description": "Webhook to Teams Channel."
 			}
+		},
+		"LogAnalyticsTier": {
+			"type": "string",
+			"defaultValue": "PerGB2018",
+			"allowedValues": ["PerGB2018", "standard"],
+			"metadata": {
+				"description": "Pricing Tier for Log Analytics. Choose PerGB2018 for new subscriptions."
+			}
 		}
 	},
 	"variables": {
@@ -70,6 +78,9 @@
 				"parameters": {
 					"TeamsWebHook": {
 						"value": "[parameters('teamsWebHook')]"
+					},
+					"insights-sku": {
+						"value": "[parameters('LogAnalyticsTier')]"
 					}
 				}
 			}
