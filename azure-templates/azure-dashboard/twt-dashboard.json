@@ -103,7 +103,7 @@
 			"type": "Microsoft.Portal/dashboards",
 			"location": "westeurope",
 			"tags": {
-				"hidden-title": "TWT-Dashboard"
+				"hidden-title": "[concat('twt-dashboard-', resourceGroup().name)]"
 			},
 			"apiVersion": "2015-08-01-preview"
 		}
