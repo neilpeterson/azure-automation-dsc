@@ -30,6 +30,24 @@
 				"description": "The number of Linux VMs to create."
 			}
 		},
+		"tenantID": {
+			"type": "string",
+			"metadata": {
+				"description": "Tenant ID to be used when performing automation."
+			}
+		},
+		"appId": {
+			"type": "string",
+			"metadata": {
+				"description": "Service Principal app ID to be used when performing automation."
+			}
+		},
+		"secret": {
+			"type": "string",
+			"metadata": {
+				"description": "Service Principal secret to be used when performing automation."
+			}
+		},
 		"teamsWebHook": {
 			"type": "string",
 			"defaultValue": "https://outlook.office.com/webhook/3b51bf6b-dc4c-46ca-944d-4c3e493fb4dc@72f988bf-86f1-41af-91ab-2d7cd011db47/IncomingWebhook/c05e36295f334b9db0ee9c2d69e8a65d/b0959e18-c917-49ec-9a03-b91957a24836",
@@ -73,6 +91,15 @@
 					},
 					"insights-sku": {
 						"value": "[parameters('LogAnalyticsTier')]"
+					},
+					"tenantID": {
+						"value": "[parameters('tenantID')]"
+					},
+					"appId": {
+						"value": "[parameters('appId')]"
+					},
+					"secret": {
+						"value": "[parameters('secret')]"
 					}
 				}
 			}
