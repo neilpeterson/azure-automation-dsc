@@ -58,8 +58,6 @@
 		"windowsVirtualMachineURI": "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/master/azure-templates/core-resources/windowsVirtualMachines.json",
 		"linuxVirtualMachineURI": "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/master/azure-templates/core-resources/linuxVirtualMachines.json",
 		"linkAccountsURI": "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/master/azure-templates/automation-monitoring/linkedWorkspaceAccount.json",
-		"azureMonitorAlert": "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/master/azure-templates/automation-monitoring/monitorAlert.json",
-		"azureMonitorActionGroupURI": "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/master/azure-templates/automation-monitoring/monitorActionGroup.json",
 		"networkURI": "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/master/azure-templates/core-resources/virtualNetwork.json",
 		"storageURI": "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/master/azure-templates/core-resources/storageAccount.json",
 		"dashboardURI": "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/master/azure-templates/azure-dashboard/twt-dashboard.json"
@@ -260,48 +258,6 @@
 					},
 					"logAnalyticsName": {
 						"value": "[reference('automationAnalytics').outputs.automationAccountName.value]"
-					}
-				}
-			}
-		},
-		{
-			"type": "Microsoft.Resources/deployments",
-			"apiVersion": "2018-05-01",
-			"name": "AzureMonitorActionGroup",
-			"dependsOn": [],
-			"properties": {
-				"mode": "Incremental",
-				"templateLink": {
-					"uri": "[variables('azureMonitorActionGroupURI')]",
-					"contentVersion": "1.0.0.0"
-				},
-				"parameters": {
-					"email": {
-						"value": "[parameters('email')]"
-					}
-				}
-			}
-		},
-		{
-			"type": "Microsoft.Resources/deployments",
-			"apiVersion": "2018-05-01",
-			"name": "AzureMonitorAlert",
-			"dependsOn": [
-				"[concat('Microsoft.Resources/deployments/', 'windowsVirtualMachine')]",
-				"[concat('Microsoft.Resources/deployments/', 'linuxVirtualMachine')]"
-			],
-			"properties": {
-				"mode": "Incremental",
-				"templateLink": {
-					"uri": "[variables('azureMonitorAlert')]",
-					"contentVersion": "1.0.0.0"
-				},
-				"parameters": {
-					"targetResourceGroup": {
-						"value": "[resourceGroup().id]"
-					},
-					"actionGroupId": {
-						"value": "[reference('AzureMonitorActionGroup').outputs.actionGroupId.value]"
 					}
 				}
 			}
