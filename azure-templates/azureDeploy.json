@@ -62,7 +62,7 @@
 		"azureMonitorActionGroupURI": "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/master/azure-templates/automation-monitoring/monitorActionGroup.json",
 		"networkURI": "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/master/azure-templates/core-resources/virtualNetwork.json",
 		"storageURI": "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/master/azure-templates/core-resources/storageAccount.json",
-		"dashboardURI": "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/master/azure-templates/azure-dashboard/dashboard.json"
+		"dashboardURI": "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/master/azure-templates/azure-dashboard/twt-dashboard.json"
 	},
 	"resources": [
 		{
@@ -329,6 +329,11 @@
 				"templateLink": {
 					"uri": "[variables('dashboardURI')]",
 					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"workspaceName": {
+						"value": "[reference('automationAnalytics').outputs.automationAccountName.value]"
+					}
 				}
 			}
 		}
