@@ -7,6 +7,15 @@
 		},
 		"insights-sku": {
 			"type": "string"
+		},
+		"tenantID": {
+			"type": "string"
+		},
+		"appId": {
+			"type": "string"
+		},
+		"secret": {
+			"type": "string"
 		}
 	},
 	"variables": {
@@ -148,8 +157,8 @@
 					],
 					"tags": {},
 					"properties": {
-						"description": "MS Teams Webhook Address",
-						"Value": "[concat('\"', 'replace', '\"')]",
+						"description": "Tenant ID",
+						"Value": "[concat('\"', parameters('tenantID'), '\"')]",
 						"isEncrypted": true
 					}
 				},
@@ -204,8 +213,8 @@
 						"[resourceId('Microsoft.Automation/automationAccounts/', variables('automationAccountName'))]"
 					],
 					"properties": {
-						"userName": "replace",
-						"password": "replace"
+						"userName": "[parameters('appId')]",
+						"password": "[parameters('secret')]"
 					}
 				}
 			]
