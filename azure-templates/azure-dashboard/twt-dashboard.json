@@ -10,7 +10,7 @@
 		}
   },
 	"variables": {
-		"dashboardName": "[concat('twt-dashboard-', '[resourceGroup().name]')]"
+		"dashboardName": "[concat('twt-dashboard-', resourceGroup().name)]"
 	},
 	"resources": [{
 			"properties": {
