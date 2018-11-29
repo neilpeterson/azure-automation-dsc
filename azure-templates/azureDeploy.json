@@ -31,19 +31,19 @@
 			}
 		},
 		"tenantID": {
-			"type": "string",
+			"type": "securestring",
 			"metadata": {
 				"description": "Tenant ID to be used when performing automation."
 			}
 		},
 		"appId": {
-			"type": "string",
+			"type": "securestring",
 			"metadata": {
 				"description": "Service Principal app ID to be used when performing automation."
 			}
 		},
 		"secret": {
-			"type": "string",
+			"type": "securestring",
 			"metadata": {
 				"description": "Service Principal secret to be used when performing automation."
 			}
