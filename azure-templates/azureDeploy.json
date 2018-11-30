@@ -54,14 +54,6 @@
 			"metadata": {
 				"description": "Webhook to Teams Channel."
 			}
-		},
-		"LogAnalyticsTier": {
-			"type": "string",
-			"defaultValue": "PerGB2018",
-			"allowedValues": ["PerGB2018", "standard"],
-			"metadata": {
-				"description": "Pricing Tier for Log Analytics. Choose PerGB2018 for new subscriptions."
-			}
 		}
 	},
 	"variables": {
@@ -72,7 +64,8 @@
 		"linkAccountsURI": "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/master/azure-templates/automation-monitoring/linkedWorkspaceAccount.json",
 		"networkURI": "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/master/azure-templates/core-resources/virtualNetwork.json",
 		"storageURI": "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/master/azure-templates/core-resources/storageAccount.json",
-		"dashboardURI": "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/master/azure-templates/azure-dashboard/twt-dashboard.json"
+		"dashboardURI": "https://raw.githubusercontent.com/neilpeterson/azure-automation-dsc/master/azure-templates/azure-dashboard/twt-dashboard.json",
+		"LogAnalyticsTier": "PerGB2018"
 	},
 	"resources": [
 		{
@@ -90,7 +83,7 @@
 						"value": "[parameters('teamsWebHook')]"
 					},
 					"insights-sku": {
-						"value": "[parameters('LogAnalyticsTier')]"
+						"value": "[variables('LogAnalyticsTier')]"
 					},
 					"tenantID": {
 						"value": "[parameters('tenantID')]"
